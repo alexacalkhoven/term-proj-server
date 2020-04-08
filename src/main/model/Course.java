@@ -1,8 +1,11 @@
 package main.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Course {
+public class Course implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private String courseName;
 	private int courseNum;
 	private ArrayList<Course> preReq;
@@ -12,9 +15,6 @@ public class Course {
 		setCourseName(name);
 		setCourseNum(num);
 
-		// Not aggregation, since you're not actually creating any preReqs
-		// Only creating a container for preReqs
-		// Both of the following are only association
 		preReq = new ArrayList<Course>();
 		offeringList = new ArrayList<CourseOffering>();
 	}
@@ -27,7 +27,6 @@ public class Course {
 		if (offering == null)
 			return;
 
-		// Both objects are set, marking the association
 		offering.setCourse(this);
 		offeringList.add(offering);
 	}

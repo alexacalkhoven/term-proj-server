@@ -1,13 +1,13 @@
 package main.model;
 
-public class Registration {
+import java.io.Serializable;
+
+public class Registration implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private Student student;
 	private CourseOffering offering;
 	private char grade;
-
-	public Registration() {
-		// Good code !!!!!!
-	}
 
 	public void addRegistration() {
 		if (offering == null || student == null) {
