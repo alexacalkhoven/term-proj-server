@@ -1,21 +1,18 @@
-package main.model;
+package main.controller;
 
 import java.io.IOException;
 import java.net.Socket;
 
-import main.controller.CommunicationManager;
-import main.controller.CourseCatalogue;
-
 public class Session implements Runnable {
 	private Socket socket;
 	private boolean running = false;
-	private CommunicationManager comManager;
 	private CourseCatalogue courseCatalogue;
+	private StudentList studentList;
 	
 	public Session(Socket socket) {
 		this.socket = socket;
-		comManager = new CommunicationManager();
 		courseCatalogue = new CourseCatalogue();
+		studentList = new StudentList();
 	}
 	
 	public void run() {

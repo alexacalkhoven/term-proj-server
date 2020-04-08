@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import main.model.Session;
+import main.controller.Session;
 
 public class Server {
 	private ExecutorService es;
