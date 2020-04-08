@@ -6,14 +6,14 @@ import java.util.ArrayList;
 public class Student implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private String studentName;
-	private int studentId;
+	private String name;
+	private int id;
 	private ArrayList<Registration> registrationList;
 
 	public Student(String name, int id) {
 		registrationList = new ArrayList<Registration>();
-		setStudentName(name);
-		setStudentId(id);
+		setName(name);
+		setId(id);
 	}
 
 	public void addRegistration(Registration registration) {
@@ -42,24 +42,24 @@ public class Student implements Serializable {
 		System.err.println("Error, student not registered for " + course.getFullName());
 	}
 
-	public String getStudentName() {
-		return studentName;
+	public String getName() {
+		return name;
 	}
 
-	public void setStudentName(String studentName) {
-		this.studentName = studentName;
+	public void setName(String studentName) {
+		this.name = studentName;
 	}
 
-	public int getStudentId() {
-		return studentId;
+	public int getId() {
+		return id;
 	}
 
-	public void setStudentId(int studentId) {
-		this.studentId = studentId;
+	public void setId(int studentId) {
+		this.id = studentId;
 	}
 
 	public String toString() {
-		String s = "Student name: " + getStudentName() + ", Student ID: " + getStudentId() + "\n";
+		String s = "Student name: " + getName() + ", Student ID: " + getId() + "\n";
 
 		s += "Registered courses:\n";
 

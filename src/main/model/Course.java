@@ -6,14 +6,14 @@ import java.util.ArrayList;
 public class Course implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private String courseName;
-	private int courseNum;
+	private String name;
+	private int number;
 	private ArrayList<Course> preReq;
 	private ArrayList<CourseOffering> offeringList;
 
 	public Course(String name, int num) {
-		setCourseName(name);
-		setCourseNum(num);
+		setName(name);
+		setNumber(num);
 
 		preReq = new ArrayList<Course>();
 		offeringList = new ArrayList<CourseOffering>();
@@ -51,28 +51,28 @@ public class Course implements Serializable {
 		return offering;
 	}
 
-	public String getCourseName() {
-		return courseName;
+	public String getName() {
+		return name;
 	}
 
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
+	public void setName(String courseName) {
+		this.name = courseName;
 	}
 
-	public int getCourseNum() {
-		return courseNum;
+	public int getNumber() {
+		return number;
 	}
 
-	public void setCourseNum(int courseNum) {
-		this.courseNum = courseNum;
+	public void setNumber(int courseNum) {
+		this.number = courseNum;
 	}
 
 	public String getFullName() {
-		return getCourseName() + " " + getCourseNum();
+		return getName() + " " + getNumber();
 	}
 
 	public String toString() {
-		String s = "Course: " + getCourseName() + " " + getCourseNum() + "\nAll course sections:\n";
+		String s = "Course: " + getName() + " " + getNumber() + "\nAll course sections:\n";
 
 		for (CourseOffering c : offeringList) {
 			s += c + "\n";

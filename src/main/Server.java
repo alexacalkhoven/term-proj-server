@@ -44,7 +44,5 @@ public class Server {
 				e.printStackTrace();
 			}
 		}
-		
-		
 	}
 }

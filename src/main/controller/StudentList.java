@@ -38,7 +38,7 @@ public class StudentList {
 
 	private Student getStudent(int id) {
 		for (Student s : studentList) {
-			if (s.getStudentId() == id)
+			if (s.getId() == id)
 				return s;
 		}
 

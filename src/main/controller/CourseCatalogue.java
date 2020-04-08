@@ -36,7 +36,7 @@ public class CourseCatalogue {
 
 	public Course getCourse(String courseName, int courseNum) {
 		for (Course c : courseList) {
-			if (c.getCourseName().contentEquals(courseName) && c.getCourseNum() == courseNum) {
+			if (c.getName().contentEquals(courseName) && c.getNumber() == courseNum) {
 				return c;
 			}
 		}
@@ -89,7 +89,7 @@ public class CourseCatalogue {
 			return;
 
 		courseList.remove(course);
-		System.out.println("Removed course: " + course.getCourseName() + " " + course.getCourseNum());
+		System.out.println("Removed course: " + course.getName() + " " + course.getNumber());
 	}
 
 	public ArrayList<Course> getCourses() {
