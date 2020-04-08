@@ -10,6 +10,7 @@ public class DBManager {
 
 	public DBManager() {
 		courseList = new ArrayList<Course>();
+		// sad :(
 	}
 
 	public ArrayList<Course> readFromDataBase() {
