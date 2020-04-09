@@ -3,6 +3,8 @@ package main.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import main.controller.CommunicationManager;
+
 public class StudentList implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

@@ -16,9 +16,12 @@ public class Server {
 		System.out.println("hello alonk");
 		System.out.println("java 13 witch !!!!!!");
 		System.out.println("mais pourqoui pas :(");
+		System.out.println("");
 		
 		Server server = new Server(4200);
 		server.listen();
+		// listen here girly-oats
+		// smfh
 	}
 	
 	public Server(int port) {

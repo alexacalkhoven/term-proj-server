@@ -5,26 +5,24 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import main.model.CourseCatalogue;
-import main.model.StudentList;
-
 public class Session implements Runnable {
 	private Socket socket;
 	private ObjectInputStream socketIn;
 	private ObjectOutputStream socketOut;
-	private boolean running = false;
-	private CourseCatalogue courseCatalogue;
-	private StudentList studentList;
+	private boolean running = true;
+	private CourseController courseController;
+	private StudentController studentController;
 	private DBManager db;
+	private CommunicationManager comManager;
 	
-	public Session(Socket socket) {		
+	public Session(Socket socket) {
 		this.socket = socket;
-		courseCatalogue = new CourseCatalogue();
-		studentList = new StudentList();
 		db = new DBManager();
+		comManager = new CommunicationManager();
+		courseController = new CourseController(comManager);
+		studentController = new StudentController(comManager);
 		
 		try {
-			socketIn = new ObjectInputStream(socket.getInputStream());
 			socketOut = new ObjectOutputStream(socket.getOutputStream());
 		} catch (IOException e) {
 			System.err.println("Error, failed to create streams for socket I/O");
@@ -32,7 +30,7 @@ public class Session implements Runnable {
 		}
 	}
 	
-	public void write(Object object) {
+	public void write(Object object) {		
 		try {
 			socketOut.writeObject(object);
 		} catch (IOException e) {
@@ -40,19 +38,26 @@ public class Session implements Runnable {
 		}
 	}
 	
+	@Override
 	public void run() {
 		System.out.println("New client session running");
 		
+		try {
+			socketIn = new ObjectInputStream(socket.getInputStream());
+		} catch (IOException e) {
+			System.err.println("Error, failed to create streams for socket I/O");
+			e.printStackTrace();
+		}
+		
 		while (running) {
 			System.out.println("Waiting...");
+			
 			try {
-				Object o = socketIn.readObject();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Request request = (Request)socketIn.readObject();
+				comManager.handleRequest(request);
+			} catch (Exception e) {
+				running = false;
+				break;
 			}
 		}
 		

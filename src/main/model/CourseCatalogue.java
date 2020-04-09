@@ -3,12 +3,16 @@ package main.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import main.controller.CommunicationManager;
+
 public class CourseCatalogue implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private ArrayList<Course> courseList;
 
 	public CourseCatalogue() {
+		courseList = new ArrayList<Course>();
+		
 		Course engg233 = new Course("ENGG", 233);
 		engg233.addOffering(new CourseOffering(1, 100));
 		engg233.addOffering(new CourseOffering(2, 50));
