@@ -54,7 +54,11 @@ public class Session implements Runnable {
 			
 			try {
 				Request request = (Request)socketIn.readObject();
-				comManager.handleRequest(request);
+				Object res = comManager.handleRequest(request);
+				
+				if (res != null) {
+					socketOut.writeObject(res);
+				}
 			} catch (Exception e) {
 				running = false;
 				break;

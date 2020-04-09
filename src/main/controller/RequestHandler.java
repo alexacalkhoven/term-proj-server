@@ -1,5 +1,5 @@
 package main.controller;
 
 public interface RequestHandler {
-	public void run(Object object);
+	public Object run(Object object);
 }

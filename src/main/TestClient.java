@@ -31,6 +31,7 @@ public class TestClient {
 
 	public void communicate()  {
 		// good strings to test with :))))
+		// v cool
 		ArrayList<String> strangs = new ArrayList<String>();
 		strangs.add("alexa is");
 		strangs.add("a");
@@ -38,14 +39,14 @@ public class TestClient {
 		strangs.add(":(");
 		
 		Request req = new Request("test", strangs);
-		Request alexa = new Request("aloxo", null);
 		
 		try {
 			socketOut.writeObject(req);
 			socketOut.reset();
-			socketOut.writeObject(alexa);
-			socketOut.reset();
-		} catch (IOException e) {
+			
+			String str = (String)socketIn.readObject();
+			System.out.println("got back: " + str);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

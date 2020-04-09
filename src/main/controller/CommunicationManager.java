@@ -19,12 +19,12 @@ public class CommunicationManager {
 		handlers.put(command, handler);
 	}
 	
-	public void handleRequest(Request req) {
+	public Object handleRequest(Request req) {
 		if (!handlers.containsKey(req.getCommand())) {
 			System.err.println("Error, key does not exist: " + req.getCommand());
-			return;
+			return null;
 		}
 		
-		handlers.get(req.getCommand()).run(req.getData());
+		return handlers.get(req.getCommand()).run(req.getData());
 	}
 }
