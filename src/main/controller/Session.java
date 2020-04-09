@@ -5,6 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import main.model.CourseCatalogue;
+import main.model.StudentList;
+
 public class Session implements Runnable {
 	private Socket socket;
 	private ObjectInputStream socketIn;
@@ -41,7 +44,16 @@ public class Session implements Runnable {
 		System.out.println("New client session running");
 		
 		while (running) {
-			
+			System.out.println("Waiting...");
+			try {
+				Object o = socketIn.readObject();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		try {

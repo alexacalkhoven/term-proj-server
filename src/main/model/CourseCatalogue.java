@@ -1,11 +1,11 @@
-package main.controller;
+package main.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-import main.model.Course;
-import main.model.CourseOffering;
-
-public class CourseCatalogue {
+public class CourseCatalogue implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private ArrayList<Course> courseList;
 
 	public CourseCatalogue() {

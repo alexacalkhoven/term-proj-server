@@ -1,10 +1,11 @@
-package main.controller;
+package main.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-import main.model.Student;
-
-public class StudentList {
+public class StudentList implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private ArrayList<Student> studentList;
 
 	public StudentList() {
