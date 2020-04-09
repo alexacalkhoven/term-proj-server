@@ -28,6 +28,31 @@ public class TestClient {
 			System.err.println(e.getStackTrace());
 		}
 	}
+	
+	public void sendRequest(String command, Object data) {
+		Request req = new Request(command, data);
+		
+		try {
+			socketOut.writeObject(req);
+			socketOut.reset();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendRequest(String command) {
+		sendRequest(command, null);
+	}
+	
+	public <T> T getResponse() {
+		try {
+			return (T)socketIn.readObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 
 	public void communicate()  {
 		// good strings to test with :))))
@@ -38,14 +63,17 @@ public class TestClient {
 		strangs.add("DINGUS!!!!");
 		strangs.add(":(");
 		
-		Request req = new Request("test", strangs);
-		
 		try {
-			socketOut.writeObject(req);
-			socketOut.reset();
+			Thread.sleep(400);
 			
-			String str = (String)socketIn.readObject();
-			System.out.println("got back: " + str);
+			sendRequest("with-args", strangs);
+			sendRequest("no-args");
+			sendRequest("return");
+			
+			System.out.println("got back: " + getResponse());
+			
+			socketOut.close();
+			socket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

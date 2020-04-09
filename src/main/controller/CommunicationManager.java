@@ -1,5 +1,6 @@
 package main.controller;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +26,34 @@ public class CommunicationManager {
 			return null;
 		}
 		
+		System.out.println("handling: " + req.getCommand());
+		
 		return handlers.get(req.getCommand()).run(req.getData());
+	}
+	
+	public void registerHandlerClass(Object obj) {
+		Class<?> cls = obj.getClass();
+		
+		for (Method method : cls.getMethods()) {
+			if (method.isAnnotationPresent(HandleRequest.class)) {
+				HandleRequest req = method.getAnnotation(HandleRequest.class);
+				
+				registerHandler(req.value(), (Object data) -> {
+					try {
+						if (method.getParameterCount() > 0) {
+							Class<?> param = method.getParameterTypes()[0];
+							return method.invoke(obj, param.cast(data));
+						} else {
+							return method.invoke(obj);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+					System.out.println("Running: " + req.value());
+					return null;
+				});
+			}
+		}
 	}
 }
