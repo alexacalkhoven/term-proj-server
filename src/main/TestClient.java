@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import main.controller.Request;
+import main.controller.Response;
 
 public class TestClient {
 	private ObjectOutputStream socketOut;
@@ -35,23 +36,16 @@ public class TestClient {
 		try {
 			socketOut.writeObject(req);
 			socketOut.reset();
-		} catch (IOException e) {
+			
+			Response res = (Response)socketIn.readObject();
+			System.out.println("Got response: " + res.getCommand() + " " + res.getData());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void sendRequest(String command) {
 		sendRequest(command, null);
-	}
-	
-	public <T> T getResponse() {
-		try {
-			return (T)socketIn.readObject();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return null;
 	}
 
 	public void communicate()  {
@@ -68,10 +62,6 @@ public class TestClient {
 			
 			sendRequest("with-args", strangs);
 			sendRequest("wow");
-//			sendRequest("no-args");
-//			sendRequest("return");
-			
-			System.out.println("got back: " + getResponse());
 			
 			socketOut.close();
 			socket.close();
