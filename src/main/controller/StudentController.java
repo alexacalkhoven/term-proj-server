@@ -9,5 +9,6 @@ public class StudentController {
 	public StudentController(CommunicationManager comManager) {
 		this.comManager = comManager;
 		this.studentList = new StudentList();
+		this.comManager.registerHandlerClass(this);
 	}
 }

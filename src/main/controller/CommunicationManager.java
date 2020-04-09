@@ -13,21 +13,23 @@ public class CommunicationManager {
 	
 	public void registerHandler(String command, RequestHandler handler) {
 		if (handlers.containsKey(command)) {
-			System.err.println("No.");
+			System.err.println("Cannot register two handlers with the same name: " + command);
 			return;
 		}
 		
 		handlers.put(command, handler);
 	}
 	
-	public Object handleRequest(Request req) {
+	public Response handleRequest(Request req) {
 		if (!handlers.containsKey(req.getCommand())) {
-			System.err.println("Error, key does not exist: " + req.getCommand());
-			return null;
+			System.err.println("Invalid command: " + req.getCommand());
+			
+			Response res = new Response(req.getCommand());
+			res.setError("Command '" + req.getCommand() + "' does not exist");
+			return res;
 		}
 		
-		System.out.println("handling: " + req.getCommand());
-		
+		System.out.println("Command: " + req.getCommand());
 		return handlers.get(req.getCommand()).run(req.getData());
 	}
 	
@@ -39,7 +41,7 @@ public class CommunicationManager {
 				HandleRequest req = method.getAnnotation(HandleRequest.class);
 				
 				registerHandler(req.value(), (Object data) -> {
-					Response res = new Response(req.value(), null);
+					Response res = new Response(req.value());
 					
 					try {
 						if (method.getParameterCount() > 0) {
@@ -53,6 +55,7 @@ public class CommunicationManager {
 							res.setData(null);
 						}
 					} catch (Exception e) {
+						System.err.println("Error running command: " + req.value());
 						e.printStackTrace();
 					}
 					
