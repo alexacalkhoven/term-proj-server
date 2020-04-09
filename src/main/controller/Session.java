@@ -50,8 +50,6 @@ public class Session implements Runnable {
 		}
 		
 		while (running) {
-			System.out.println("Waiting...");
-			
 			try {
 				Request request = (Request)socketIn.readObject();
 				Object res = comManager.handleRequest(request);

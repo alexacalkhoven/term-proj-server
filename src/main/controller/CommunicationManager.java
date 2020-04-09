@@ -1,5 +1,6 @@
 package main.controller;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,16 @@ public class CommunicationManager {
 		}
 		
 		System.out.println("Command: " + req.getCommand());
-		return handlers.get(req.getCommand()).run(req.getData());
+		
+		try {
+			return handlers.get(req.getCommand()).run(req.getData());
+		} catch (InvalidRequestException e) {
+			System.err.println("Invalid Request '" + req.getCommand() + "': " + e.getMessage());
+			
+			Response res = new Response(req.getCommand());
+			res.setError(e.getMessage());
+			return res;
+		}
 	}
 	
 	public void registerHandlerClass(Object obj) {
@@ -54,9 +64,16 @@ public class CommunicationManager {
 						if (method.getReturnType().equals(Void.class)) {
 							res.setData(null);
 						}
+					} catch (InvocationTargetException e) {
+						System.err.println("Invalid request: " + req.value());
+						res.setError("Invalid request: " + e.getTargetException().getMessage());
+					} catch (IllegalArgumentException | ClassCastException e) {
+						System.err.println("Invalid request: " + req.value());
+						res.setError("Invalid request, wrong arguments");
 					} catch (Exception e) {
 						System.err.println("Error running command: " + req.value());
-						e.printStackTrace();
+						res.setError(e.getMessage());
+//						e.printStackTrace();
 					}
 					
 					return res;

@@ -5,9 +5,9 @@ import java.io.Serializable;
 public class Response implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	public String command;
-	public String error;
-	public Object data;
+	private String command;
+	private String error;
+	private Object data;
 	
 	public Response(String command) {
 		this(command, null);

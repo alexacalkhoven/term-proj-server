@@ -38,7 +38,12 @@ public class TestClient {
 			socketOut.reset();
 			
 			Response res = (Response)socketIn.readObject();
-			System.out.println("Got response: " + res.getCommand() + " " + res.getData());
+			
+			if (res.getError() != null) {
+				System.err.println("Request error: " + res.getError());
+			} else {
+				System.out.println("Got response: " + res.getCommand() + " " + res.getData());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -60,8 +65,8 @@ public class TestClient {
 		try {
 			Thread.sleep(400);
 			
-			sendRequest("with-args", strangs);
-			sendRequest("wow");
+			sendRequest("course.search", new Object[] { "asdf", 123 });
+			sendRequest("course.search", new Object[] { true, false });
 			
 			socketOut.close();
 			socket.close();

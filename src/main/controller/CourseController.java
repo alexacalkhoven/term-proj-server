@@ -1,5 +1,6 @@
 package main.controller;
 
+import main.model.Course;
 import main.model.CourseCatalogue;
 
 public class CourseController {
@@ -12,13 +13,27 @@ public class CourseController {
 		comManager.registerHandlerClass(this);
 	}
 	
-	@HandleRequest("searchCourse")
-	public String searchCourse(String id) {
-		return "hi aloxo, you searched for: " + id;
+	@HandleRequest("course.search")
+	public Course searchCourse(Object[] args) throws InvalidRequestException {
+		try {
+			String name = (String)args[0];
+			int number = (Integer)args[1];
+			
+			return courseCatalogue.searchCourse(name, number);
+		} catch (Exception e) {
+			throw new InvalidRequestException("Expected arguments: Object[] {String name, int number}");
+		}
 	}
 	
-	@HandleRequest("courseExists")
-	public boolean courseExists(String id) {
-		return true;
+	@HandleRequest("course.get")
+	public Course getCourse(Object[] args) throws InvalidRequestException {
+		try {
+			String name = (String)args[0];
+			int number = (Integer)args[1];
+			
+			return courseCatalogue.getCourse(name, number);
+		} catch (Exception e) {
+			throw new InvalidRequestException("Expected arguments: Object[] {String name, int number}");
+		}
 	}
 }
