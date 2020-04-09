@@ -1,7 +1,5 @@
 package main.controller;
 
-import java.util.ArrayList;
-
 import main.model.CourseCatalogue;
 
 public class CourseController {
@@ -14,10 +12,13 @@ public class CourseController {
 		comManager.registerHandlerClass(this);
 	}
 	
-	@HandleRequest("with-args")
-	public void takeMyStrangs(ArrayList<String> strangs) {
-		for (String s : strangs) {
-			System.out.println(s);
-		}
+	@HandleRequest("searchCourse")
+	public String searchCourse(String id) {
+		return "hi aloxo, you searched for: " + id;
+	}
+	
+	@HandleRequest("courseExists")
+	public boolean courseExists(String id) {
+		return true;
 	}
 }
