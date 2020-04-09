@@ -39,19 +39,24 @@ public class CommunicationManager {
 				HandleRequest req = method.getAnnotation(HandleRequest.class);
 				
 				registerHandler(req.value(), (Object data) -> {
+					Response res = new Response(req.value(), null);
+					
 					try {
 						if (method.getParameterCount() > 0) {
 							Class<?> param = method.getParameterTypes()[0];
-							return method.invoke(obj, param.cast(data));
+							res.setData(method.invoke(obj, param.cast(data)));
 						} else {
-							return method.invoke(obj);
+							res.setData(method.invoke(obj));
+						}
+						
+						if (method.getReturnType().equals(Void.class)) {
+							res.setData(null);
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 					
-					System.out.println("Running: " + req.value());
-					return null;
+					return res;
 				});
 			}
 		}

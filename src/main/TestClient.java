@@ -67,8 +67,9 @@ public class TestClient {
 			Thread.sleep(400);
 			
 			sendRequest("with-args", strangs);
-			sendRequest("no-args");
-			sendRequest("return");
+			sendRequest("wow");
+//			sendRequest("no-args");
+//			sendRequest("return");
 			
 			System.out.println("got back: " + getResponse());
 			

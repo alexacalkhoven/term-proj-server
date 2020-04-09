@@ -14,20 +14,10 @@ public class CourseController {
 		comManager.registerHandlerClass(this);
 	}
 	
-	@HandleRequest("no-args")
-	public void func() {
-		System.out.println("it works");
-	}
-	
 	@HandleRequest("with-args")
-	public void testFunc(ArrayList<String> strings) {
-		for (String s : strings) {
+	public void takeMyStrangs(ArrayList<String> strangs) {
+		for (String s : strangs) {
 			System.out.println(s);
 		}
-	}
-	
-	@HandleRequest("return")
-	public String ret() {
-		return "omg";
 	}
 }
