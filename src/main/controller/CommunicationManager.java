@@ -16,9 +16,15 @@ public class CommunicationManager {
 		handlers = new HashMap<String, RequestHandler>();
 	}
 	
+	/**
+	 * Creates new Map element for a new command.
+	 * 
+	 * @param command Command name.
+	 * @param handler T
+	 */
 	public void registerHandler(String command, RequestHandler handler) {
 		if (handlers.containsKey(command)) {
-			System.err.println("Command requested does not exist.");
+			System.err.println("Command requested already exists.");
 			return;
 		}
 		
