@@ -1,10 +1,14 @@
 package main.controller;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+/** 
+ * Contains a Map that will redirect a Request key (String) to the proper function that will execute it.
+ * 
+ * @author Radu Schirliu
+ */
 public class CommunicationManager {
 	Map<String, RequestHandler> handlers;
 	
@@ -14,33 +18,22 @@ public class CommunicationManager {
 	
 	public void registerHandler(String command, RequestHandler handler) {
 		if (handlers.containsKey(command)) {
-			System.err.println("Cannot register two handlers with the same name: " + command);
+			System.err.println("Command requested does not exist.");
 			return;
 		}
 		
 		handlers.put(command, handler);
 	}
 	
-	public Response handleRequest(Request req) {
+	public Object handleRequest(Request req) {
 		if (!handlers.containsKey(req.getCommand())) {
-			System.err.println("Invalid command: " + req.getCommand());
-			
-			Response res = new Response(req.getCommand());
-			res.setError("Command '" + req.getCommand() + "' does not exist");
-			return res;
+			System.err.println("Error, key does not exist: " + req.getCommand());
+			return null;
 		}
 		
-		System.out.println("Command: " + req.getCommand());
+		System.out.println("handling: " + req.getCommand());
 		
-		try {
-			return handlers.get(req.getCommand()).run(req.getData());
-		} catch (InvalidRequestException e) {
-			System.err.println("Invalid Request '" + req.getCommand() + "': " + e.getMessage());
-			
-			Response res = new Response(req.getCommand());
-			res.setError(e.getMessage());
-			return res;
-		}
+		return handlers.get(req.getCommand()).run(req.getData());
 	}
 	
 	public void registerHandlerClass(Object obj) {
@@ -51,7 +44,7 @@ public class CommunicationManager {
 				HandleRequest req = method.getAnnotation(HandleRequest.class);
 				
 				registerHandler(req.value(), (Object data) -> {
-					Response res = new Response(req.value());
+					Response res = new Response(req.value(), null);
 					
 					try {
 						if (method.getParameterCount() > 0) {
@@ -64,16 +57,8 @@ public class CommunicationManager {
 						if (method.getReturnType().equals(Void.class)) {
 							res.setData(null);
 						}
-					} catch (InvocationTargetException e) {
-						System.err.println("Invalid request: " + req.value());
-						res.setError("Invalid request: " + e.getTargetException().getMessage());
-					} catch (IllegalArgumentException | ClassCastException e) {
-						System.err.println("Invalid request: " + req.value());
-						res.setError("Invalid request, wrong arguments");
 					} catch (Exception e) {
-						System.err.println("Error running command: " + req.value());
-						res.setError(e.getMessage());
-//						e.printStackTrace();
+						e.printStackTrace();
 					}
 					
 					return res;
