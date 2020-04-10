@@ -60,19 +60,16 @@ public class CommunicationManager {
 						} else {
 							res.setData(method.invoke(obj));
 						}
-						
-						if (method.getReturnType().equals(Void.class)) {
-							res.setData(null);
-						}
 					} catch (InvocationTargetException e) {
 						System.err.println("Invalid request: " + req.value());
 						res.setError("Invalid request: " + e.getTargetException().getMessage());
 					} catch (IllegalArgumentException | ClassCastException e) {
 						System.err.println("Invalid request: " + req.value());
-						res.setError("Invalid request, wrong arguments");
+						res.setError("Invalid request: Incorrect arguments");
 					} catch (Exception e) {
 						System.err.println("Error running command: " + req.value());
 						res.setError(e.getMessage());
+						e.printStackTrace();
 					}
 					
 					return res;
