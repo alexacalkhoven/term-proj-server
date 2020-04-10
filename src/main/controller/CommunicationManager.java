@@ -73,7 +73,6 @@ public class CommunicationManager {
 					} catch (Exception e) {
 						System.err.println("Error running command: " + req.value());
 						res.setError(e.getMessage());
-//						e.printStackTrace();
 					}
 					
 					return res;
