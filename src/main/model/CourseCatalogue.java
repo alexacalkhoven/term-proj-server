@@ -30,6 +30,10 @@ public class CourseCatalogue implements Serializable {
 		phys259.addOffering(new CourseOffering(2, 90));
 		courseList.add(phys259);
 	}
+	
+	public int getCourseListLength() {
+		return courseList.size();
+	}
 
 	/**
 	 * Gets a course with specified name and number
