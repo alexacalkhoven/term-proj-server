@@ -10,14 +10,14 @@ import java.util.Map;
  * 
  * In CourseController and StudentController you call registerHandlerClass which fills the map in CommunicationManager 
  * with <String, RequestHandler> objects (by searching thru CourseController/StudentController you will find annotations; 
- * you will use the text that comprises the annotation as String object in the map element, and the RequestHandler gets 
+ * you will use the text that comprises the annotation as the String object in the map element, and the RequestHandler gets 
  * its run method defined using the code below the annotation). When handleRequest gets called, it searches the map 
  * for a String matching the command String sent, and it will call run on the associated RequestHandler. The run function
  * will already have been defined because it was setup during the registerHandlerClass function.
  */
 
 /**
- * Organizes the RequestHandlers and the name associated with the command.
+ * Stores and sets up the RequestHandlers, which can be accessed with a key (String) associated with the command.
  * 
  * @author Radu Schirliu
  */
