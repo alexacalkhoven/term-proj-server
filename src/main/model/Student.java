@@ -16,30 +16,35 @@ public class Student implements Serializable {
 		setId(id);
 	}
 
-	public void addRegistration(Registration registration) {
+	public boolean addRegistration(Registration registration) {
+		if (registrationList.contains(registration)) return false;
+		
 		registrationList.add(registration);
+		return true;
 	}
 
 	public boolean isRegistered(Course course) {
 		for (Registration reg : registrationList) {
-			if (reg.getOffering().getCourse().equals(course))
+			if (reg.getOffering().getCourse().equals(course)) {
 				return true;
+			}
 		}
 
 		return false;
 	}
 
-	public void removeRegistration(Course course) {
+	public boolean removeRegistration(Course course) {
 		for (Registration reg : registrationList) {
 			if (reg.getOffering().getCourse().equals(course)) {
 				System.out.println("Dropped course: " + course.getFullName());
 				reg.removeRegistration();
 				registrationList.remove(reg);
-				return;
+				return true;
 			}
 		}
 
 		System.err.println("Error, student not registered for " + course.getFullName());
+		return false;
 	}
 
 	public String getName() {
