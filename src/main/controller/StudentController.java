@@ -47,9 +47,8 @@ public class StudentController {
 	}
 	
 	@HandleRequest("student.remove")
-	public boolean removeStudent(Object[] args) {
+	public boolean removeStudent(Integer number) {
 		int initLen = studentList.getLength();
-		int number = (Integer)args[0];
 		studentList.removeStudent(number);
 		int finalLen = studentList.getLength();
 		//returns true if successful (studentList is 1 Student shorter)
@@ -60,7 +59,7 @@ public class StudentController {
 	}
 
 	@HandleRequest("student.login")
-	public void studentLogin(int id) {
+	public void studentLogin(Integer id) {
 		this.student = studentList.searchStudent(id);
 	}
 
