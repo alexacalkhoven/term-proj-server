@@ -101,10 +101,18 @@ public class CommunicationManager {
 						}
 					} catch (InvocationTargetException e) {
 						System.err.println("Invalid request: " + req.value());
-						res.setError("Invalid request: " + e.getTargetException().getMessage());
+						Throwable targetEx = e.getTargetException();
+						
+						if (targetEx instanceof ClassCastException) {
+							res.setError("Invalid request, incorrect arguments: " + targetEx.getMessage());
+						} else {
+							res.setError("Server error: " + targetEx.getClass() + " | " + targetEx.getMessage());
+						}
+						
+						
 					} catch (IllegalArgumentException | ClassCastException e) {
 						System.err.println("Invalid request: " + req.value());
-						res.setError("Invalid request: Incorrect arguments");
+						res.setError("Invalid request, incorrect arguments: " + e.getMessage());
 					} catch (Exception e) {
 						System.err.println("Error running command: " + req.value());
 						res.setError(e.getMessage());
