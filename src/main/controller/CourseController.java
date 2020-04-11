@@ -1,5 +1,7 @@
 package main.controller;
 
+import java.util.ArrayList;
+
 import main.model.Course;
 import main.model.CourseCatalogue;
 
@@ -18,14 +20,20 @@ public class CourseController {
 		String name = (String)args[0];
 		int number = (Integer)args[1];
 		
-		return courseCatalogue.searchCourse(name, number);
+		return courseCatalogue.getCourse(name, number);
+	}
+
+	@HandleRequest("course.get")
+	public ArrayList<Course> getCourses() {
+		return courseCatalogue.getCourses();
 	}
 	
-	@HandleRequest("course.get")
-	public Course getCourse(Object[] args) {
+	@HandleRequest("course.remove")
+	public void removeCourse(Object[] args) {
 		String name = (String)args[0];
 		int number = (Integer)args[1];
 		
-		return courseCatalogue.getCourse(name, number);
+		courseCatalogue.removeCourse(name, number);
 	}
+
 }

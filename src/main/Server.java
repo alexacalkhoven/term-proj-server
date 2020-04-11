@@ -34,6 +34,7 @@ public class Server {
 			System.out.println("Server started");
 		} catch (IOException e) {
 			System.err.println("Failed to start server");
+			System.exit(0);
 			e.printStackTrace();
 		}
 	}
