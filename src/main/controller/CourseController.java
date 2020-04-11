@@ -27,4 +27,12 @@ public class CourseController {
 	public ArrayList<Course> getCourses() {
 		return courseCatalogue.getCourses();
 	}
+	
+	@HandleRequest("course.remove")
+	public void removeCourse(Object[] args) {
+		String name = (String)args[0];
+		int number = (Integer)args[1];
+		
+		courseCatalogue.removeCourse(name, number);
+	}
 }

@@ -95,6 +95,11 @@ public class CourseCatalogue implements Serializable {
 		courseList.remove(course);
 		System.out.println("Removed course: " + course.getName() + " " + course.getNumber());
 	}
+	
+	public void removeCourse(String name, int num) {
+		Course c = getCourse(name, num);
+		removeCourse(c);
+	}
 
 	public ArrayList<Course> getCourses() {
 		return courseList;
