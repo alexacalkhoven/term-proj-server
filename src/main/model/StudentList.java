@@ -10,6 +10,9 @@ public class StudentList implements Serializable {
 	
 	private ArrayList<Student> studentList;
 
+	/**
+	 * Initialize the student list, add test students
+	 */
 	public StudentList() {
 		studentList = new ArrayList<Student>();
 		
@@ -17,35 +20,56 @@ public class StudentList implements Serializable {
 		studentList.add(new Student("Alexa", 3));
 	}
 	
+	/**
+	 * Gets the amount of students
+	 * @return The length of the student list
+	 */
 	public int getLength() {
 		return studentList.size();
 	}
 
-	public void addStudent(String name, int id) {
+	/**
+	 * Creates a new student with given name and id, and adds it to the list
+	 * @param name Student name
+	 * @param id Student id
+	 * @return Whether it was successful or not
+	 */
+	public boolean addStudent(String name, int id) {
 		Student student = getStudent(id);
 
 		if (student != null) {
 			System.err.println("Student with this ID already exists: ");
 			System.err.println(student);
 
-			return;
+			return false;
 		}
 
 		student = new Student(name, id);
 		studentList.add(student);
 		System.out.println("Created new student:\n" + student);
+		return true;
 	}
 
-	public void removeStudent(int id) {
-		Student student = searchStudent(id);
+	/**
+	 * Removes student from list with given ID
+	 * @param id Student ID to remove
+	 * @return Whether the remove was successful or not
+	 */
+	public boolean removeStudent(int id) {
+		Student student = getStudent(id);
 
 		if (student == null)
-			return;
+			return false;
 
-		studentList.remove(student);
 		System.out.println("Removed student:\n" + student);
+		return studentList.remove(student);
 	}
 
+	/**
+	 * Returns student from list with given ID
+	 * @param id Student ID to search for
+	 * @return Student with given ID, or null if none found
+	 */
 	public Student getStudent(int id) {
 		for (Student s : studentList) {
 			if (s.getId() == id)
@@ -53,15 +77,5 @@ public class StudentList implements Serializable {
 		}
 
 		return null;
-	}
-
-	public Student searchStudent(int id) {
-		Student student = getStudent(id);
-
-		if (student == null) {
-			System.err.println("Error, could not find student with ID: " + id);
-		}
-
-		return student;
 	}
 }

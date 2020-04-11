@@ -48,14 +48,7 @@ public class StudentController {
 	
 	@HandleRequest("student.remove")
 	public boolean removeStudent(Integer number) {
-		int initLen = studentList.getLength();
-		studentList.removeStudent(number);
-		int finalLen = studentList.getLength();
-		//returns true if successful (studentList is 1 Student shorter)
-		if(initLen - 1 == finalLen) {
-			return true;
-		}
-		return false;
+		return studentList.removeStudent(number);
 	}
 
 	@HandleRequest("student.login")
