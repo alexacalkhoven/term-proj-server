@@ -12,6 +12,9 @@ public class StudentList implements Serializable {
 
 	public StudentList() {
 		studentList = new ArrayList<Student>();
+		
+		studentList.add(new Student("Test", 1));
+		studentList.add(new Student("Alexa", 3));
 	}
 	
 	public int getLength() {
@@ -43,7 +46,7 @@ public class StudentList implements Serializable {
 		System.out.println("Removed student:\n" + student);
 	}
 
-	private Student getStudent(int id) {
+	public Student getStudent(int id) {
 		for (Student s : studentList) {
 			if (s.getId() == id)
 				return s;
