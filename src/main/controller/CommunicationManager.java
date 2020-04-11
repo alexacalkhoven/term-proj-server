@@ -85,6 +85,7 @@ public class CommunicationManager {
 			//is there an annotation of type HandleRequest on this method?
 			if (method.isAnnotationPresent(HandleRequest.class)) {
 				//why make a HandleRequest object equal to an annotation?
+				//HandleRequest is essentially the annotation class (therefore you can set them equal)
 				// no i uhhh... no... yeah... i .... NO... wait... NO.. let that die one sec... no
 				HandleRequest req = method.getAnnotation(HandleRequest.class);
 				
