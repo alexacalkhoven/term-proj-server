@@ -14,26 +14,18 @@ public class CourseController {
 	}
 	
 	@HandleRequest("course.search")
-	public Course searchCourse(Object[] args) throws InvalidRequestException {
-		try {
-			String name = (String)args[0];
-			int number = (Integer)args[1];
-			
-			return courseCatalogue.searchCourse(name, number);
-		} catch (Exception e) {
-			throw new InvalidRequestException("Expected arguments: Object[] {String name, int number}");
-		}
+	public Course searchCourse(Object[] args) {
+		String name = (String)args[0];
+		int number = (Integer)args[1];
+		
+		return courseCatalogue.searchCourse(name, number);
 	}
 	
 	@HandleRequest("course.get")
-	public Course getCourse(Object[] args) throws InvalidRequestException {
-		try {
-			String name = (String)args[0];
-			int number = (Integer)args[1];
-			
-			return courseCatalogue.getCourse(name, number);
-		} catch (Exception e) {
-			throw new InvalidRequestException("Expected arguments: Object[] {String name, int number}");
-		}
+	public Course getCourse(Object[] args) {
+		String name = (String)args[0];
+		int number = (Integer)args[1];
+		
+		return courseCatalogue.getCourse(name, number);
 	}
 }
