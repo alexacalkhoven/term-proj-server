@@ -22,12 +22,26 @@ public class StudentController {
 		student = null;
 	}
 	
-	@HandleRequest("student.viewReg")
+	@HandleRequest("student.create")
+	public boolean createStudent(Object[] args){
+		String name = (String)args[0];
+		int id = (Integer)args[1];
+		int initLen = studentList.getLength();
+		studentList.addStudent(name, id);
+		int finalLen = studentList.getLength();
+		//returns true if successful (studentList is 1 Student longer)
+		if(initLen + 1 == finalLen) {
+			return true;
+		}
+		return false;
+	}
+	
+	@HandleRequest("student.regList")
 	public ArrayList<Registration> viewRegs(Object[] args){
 		return student.getRegistrationList();
 	}
 	
-	@HandleRequest("student.registerCourse")
+	@HandleRequest("student.addRegCourse")
 	public boolean registerStudent(Object[] args) {
 		String name = (String)args[0];
 		int number = (Integer)args[1];
