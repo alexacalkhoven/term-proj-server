@@ -1,5 +1,7 @@
 package main.controller;
 
+import java.util.ArrayList;
+
 import main.model.Course;
 import main.model.CourseCatalogue;
 import main.model.CourseOffering;
@@ -18,6 +20,11 @@ public class StudentController {
 		this.studentList = new StudentList();
 		this.comManager.registerHandlerClass(this);
 		student = null;
+	}
+	
+	@HandleRequest("student.viewReg")
+	public ArrayList<Registration> viewRegs(Object[] args){
+		return student.getRegistrationList();
 	}
 	
 	@HandleRequest("student.registerCourse")

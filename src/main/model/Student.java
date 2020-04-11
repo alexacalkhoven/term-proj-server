@@ -69,4 +69,8 @@ public class Student implements Serializable {
 
 		return s;
 	}
+
+	public ArrayList<Registration> getRegistrationList() {
+		return registrationList;
+	}
 }
