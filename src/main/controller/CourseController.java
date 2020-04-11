@@ -35,4 +35,5 @@ public class CourseController {
 		
 		courseCatalogue.removeCourse(name, number);
 	}
+
 }
