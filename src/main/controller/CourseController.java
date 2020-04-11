@@ -38,12 +38,6 @@ public class CourseController {
 		return courseCatalogue.createCourse((String) args[0], (Integer) args[1]);
 	}
 
-	// Should be deleted (dupe for course.get):
-	@HandleRequest("course.viewAll")
-	public CourseCatalogue viewCourses() {
-		return courseCatalogue;
-	}
-
 	@HandleRequest("course.search")
 	public Course searchCourse(Object[] args) {
 		String name = (String) args[0];
@@ -62,13 +56,10 @@ public class CourseController {
 		String name = (String) args[0];
 		int number = (Integer) args[1];
 
-		System.out.println("In remove");
-		System.out.println("name: " + name);
-		System.out.println("id: " + number);
-
 		int initLen = courseCatalogue.getCourseListLength();
 		courseCatalogue.removeCourse(name, number);
 		int finalLen = courseCatalogue.getCourseListLength();
+		
 		if (initLen - 1 == finalLen) {
 			return true;
 		}
