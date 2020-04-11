@@ -10,9 +10,9 @@ public class CourseController {
 	private CommunicationManager comManager;
 	private CourseCatalogue courseCatalogue;
 	
-	public CourseController(CommunicationManager comManager) {
+	public CourseController(CommunicationManager comManager, CourseCatalogue courseCatalogue) {
 		this.comManager = comManager;
-		this.courseCatalogue = new CourseCatalogue();
+		this.courseCatalogue = courseCatalogue;
 		comManager.registerHandlerClass(this);
 	}
 	

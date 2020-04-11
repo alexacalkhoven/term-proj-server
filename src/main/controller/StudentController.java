@@ -18,9 +18,10 @@ public class StudentController {
 	private Student student;
 	private CourseCatalogue courseCatalogue;
 	
-	public StudentController(CommunicationManager comManager) {
+	public StudentController(CommunicationManager comManager, StudentList studentList, CourseCatalogue courseCatalogue) {
 		this.comManager = comManager;
-		this.studentList = new StudentList();
+		this.studentList = studentList;
+		this.courseCatalogue = courseCatalogue;
 		this.comManager.registerHandlerClass(this);
 		student = null;
 	}
@@ -46,18 +47,30 @@ public class StudentController {
 	}
 	
 	@HandleRequest("student.addRegCourse")
-	public boolean registerStudent(Object[] args) {
+	public boolean registerStudent(Object[] args) throws InvalidRequestException {
+		if (student == null) {
+			throw new InvalidRequestException("Not logged in");
+		}
+		
 		String name = (String)args[0];
 		int number = (Integer)args[1];
 		int offeringNum = (Integer)args[2];
 		Registration newReg = new Registration();
 		//link this student to the Registration
 		newReg.setStudent(student);
-		//find desired course offering
-		CourseOffering desiredCourseOff = courseCatalogue.getCourse(name, number).getCourseOffering(offeringNum);
-		if(desiredCourseOff == null) {
-			return false;
+		
+		// Find desired course
+		Course course = courseCatalogue.getCourse(name, number);
+		if (course == null) {
+			throw new InvalidRequestException("Coud not find course: " + name + " " + number);
 		}
+		
+		//find desired course offering
+		CourseOffering desiredCourseOff = course.getCourseOffering(offeringNum);
+		if (desiredCourseOff == null) {
+			throw new InvalidRequestException("Coud not find offering: " + offeringNum);
+		}
+		
 		//if the course offering exists, link it to the Registration
 		newReg.setOffering(desiredCourseOff);
 		student.addRegistration(newReg);
@@ -76,11 +89,17 @@ public class StudentController {
 	}
 
 	@HandleRequest("student.dropCourse")
-	public boolean removeCourse(Object[] args) {
+	public boolean removeCourse(Object[] args) throws InvalidRequestException {
 		if (student == null) return false;
 		
 		String name = (String)args[0];
 		int number = (Integer)args[1];
-		return student.removeRegistration(courseCatalogue.getCourse(name, number));
+		
+		Course course = courseCatalogue.getCourse(name, number);
+		if (course == null) {
+			throw new InvalidRequestException("Course does not exist: " + name + " " + number);
+		}
+		
+		return student.removeRegistration(course);
 	}
 }

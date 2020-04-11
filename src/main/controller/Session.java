@@ -5,6 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import main.model.CourseCatalogue;
+import main.model.StudentList;
+
 /**
  * Manages receiving requests from the Client and sends them to the communication manager to be handled.
  * 
@@ -19,6 +22,8 @@ public class Session implements Runnable {
 	private StudentController studentController;
 	private DBManager db;
 	private CommunicationManager comManager;
+	private CourseCatalogue courseCatalogue;
+	private StudentList studentList;
 	
     /**
      * Sets up the various in/out sockets for communicating with the client on this thread.
@@ -28,8 +33,10 @@ public class Session implements Runnable {
 		this.socket = socket;
 		db = new DBManager();
 		comManager = new CommunicationManager();
-		courseController = new CourseController(comManager);
-		studentController = new StudentController(comManager);
+		courseCatalogue = new CourseCatalogue();
+		studentList = new StudentList();
+		courseController = new CourseController(comManager, courseCatalogue);
+		studentController = new StudentController(comManager, studentList, courseCatalogue);
 		
 		try {
             //Sets up a socket to send serialized objects through

@@ -38,8 +38,12 @@ public class CourseCatalogue implements Serializable {
 	 * @return The course, or null if none found
 	 */
 	public Course getCourse(String courseName, int courseNum) {
+		String targetName = courseName.toLowerCase();
+		
 		for (Course c : courseList) {
-			if (c.getName().contentEquals(courseName) && c.getNumber() == courseNum) {
+			String name = c.getName().toLowerCase();
+			
+			if (name.contentEquals(targetName) && c.getNumber() == courseNum) {
 				return c;
 			}
 		}

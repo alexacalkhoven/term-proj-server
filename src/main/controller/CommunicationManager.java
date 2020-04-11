@@ -91,6 +91,7 @@ public class CommunicationManager {
 				
 				registerHandler(req.value(), (Object data) -> {
 					Response res = new Response(req.value());
+					res.setData(null);
 					
 					try {
 						if (method.getParameterCount() > 0) {
@@ -103,10 +104,13 @@ public class CommunicationManager {
 						System.err.println("Invalid request: " + req.value());
 						Throwable targetEx = e.getTargetException();
 						
-						if (targetEx instanceof ClassCastException) {
+						if (targetEx instanceof InvalidRequestException) {
+							res.setError("Invalid request: " + targetEx.getMessage());
+						} else if (targetEx instanceof ClassCastException) {
 							res.setError("Invalid request, incorrect arguments: " + targetEx.getMessage());
 						} else {
 							res.setError("Server error: " + targetEx.getClass() + " | " + targetEx.getMessage());
+							targetEx.printStackTrace();
 						}
 						
 						
