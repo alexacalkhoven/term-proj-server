@@ -85,6 +85,7 @@ public class CommunicationManager {
 			//is there an annotation of type HandleRequest on this method?
 			if (method.isAnnotationPresent(HandleRequest.class)) {
 				//why make a HandleRequest object equal to an annotation?
+				// no i uhhh... no... yeah... i .... NO... wait... NO.. let that die one sec... no
 				HandleRequest req = method.getAnnotation(HandleRequest.class);
 				
 				registerHandler(req.value(), (Object data) -> {
@@ -97,20 +98,16 @@ public class CommunicationManager {
 						} else {
 							res.setData(method.invoke(obj));
 						}
-						
-						if (method.getReturnType().equals(Void.class)) {
-							res.setData(null);
-						}
 					} catch (InvocationTargetException e) {
 						System.err.println("Invalid request: " + req.value());
 						res.setError("Invalid request: " + e.getTargetException().getMessage());
 					} catch (IllegalArgumentException | ClassCastException e) {
 						System.err.println("Invalid request: " + req.value());
-						res.setError("Invalid request, wrong arguments");
+						res.setError("Invalid request: Incorrect arguments");
 					} catch (Exception e) {
 						System.err.println("Error running command: " + req.value());
 						res.setError(e.getMessage());
-						//e.printStackTrace();
+						e.printStackTrace();
 					}
 					
 					return res;
