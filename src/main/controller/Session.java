@@ -83,6 +83,7 @@ public class Session implements Runnable {
 				
 				if (res != null) {
 					socketOut.writeObject(res);
+					socketOut.reset();
 				}
 			} catch (Exception e) {
 				running = false;

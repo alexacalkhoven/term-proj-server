@@ -62,10 +62,6 @@ public class CourseController {
 		String name = (String) args[0];
 		int number = (Integer) args[1];
 
-		System.out.println("In remove");
-		System.out.println("name: " + name);
-		System.out.println("id: " + number);
-
 		int initLen = courseCatalogue.getCourseListLength();
 		courseCatalogue.removeCourse(name, number);
 		int finalLen = courseCatalogue.getCourseListLength();
