@@ -5,6 +5,22 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+ * An explanation of Radu's spicy code for Alexa's health and well being:
+ * 
+ * In CourseController and StudentController you call registerHandlerClass which fills the map in CommunicationManager 
+ * with <String, RequestHandler> objects (by searching thru CourseController/StudentController you will find annotations; 
+ * you will use the text that comprises the annotation as String object in the map element, and the RequestHandler gets 
+ * its run method defined using the code below the annotation). When handleRequest gets called, it searches the map 
+ * for a String matching the command String sent, and it will call run on the associated RequestHandler. The run function
+ * will already have been defined because it was setup during the registerHandlerClass function.
+ */
+
+/**
+ * Organizes the RequestHandlers and the name associated with the command.
+ * 
+ * @author Radu Schirliu
+ */
 public class CommunicationManager {
 	Map<String, RequestHandler> handlers;
 	
@@ -16,7 +32,8 @@ public class CommunicationManager {
 	 * Creates new Map element for a new command.
 	 * 
 	 * @param command Command name.
-	 * @param handler T
+	 * @param handler Creates an anon class where the RequestHandler is implemented and the run
+	 * function is defined.
 	 */
 	public void registerHandler(String command, RequestHandler handler) {
 		if (handlers.containsKey(command)) {
@@ -27,6 +44,12 @@ public class CommunicationManager {
 		handlers.put(command, handler);
 	}
 	
+	/**
+	 * Runs the appropriate function in response to the Request and returns the Response.
+	 * 
+	 * @param req The request sent by the client.
+	 * @return Response
+	 */
 	public Response handleRequest(Request req) {
 		if (!handlers.containsKey(req.getCommand())) {
 			System.err.println("Invalid command: " + req.getCommand());
@@ -39,6 +62,7 @@ public class CommunicationManager {
 		System.out.println("Command: " + req.getCommand());
 		
 		try {
+			//gets the RequestHandler in the map associated with the command and runs it
 			return handlers.get(req.getCommand()).run(req.getData());
 		} catch (InvalidRequestException e) {
 			System.err.println("Invalid Request '" + req.getCommand() + "': " + e.getMessage());
@@ -49,11 +73,18 @@ public class CommunicationManager {
 		}
 	}
 	
+	/**
+	 * Links the annotated functions of a class to an element of the map.
+	 * 
+	 * @param obj The class to be registered.
+	 */
 	public void registerHandlerClass(Object obj) {
 		Class<?> cls = obj.getClass();
 		
 		for (Method method : cls.getMethods()) {
+			//is there an annotation of type HandleRequest on this method?
 			if (method.isAnnotationPresent(HandleRequest.class)) {
+				//why make a HandleRequest object equal to an annotation?
 				HandleRequest req = method.getAnnotation(HandleRequest.class);
 				
 				registerHandler(req.value(), (Object data) -> {
@@ -79,7 +110,7 @@ public class CommunicationManager {
 					} catch (Exception e) {
 						System.err.println("Error running command: " + req.value());
 						res.setError(e.getMessage());
-//						e.printStackTrace();
+						//e.printStackTrace();
 					}
 					
 					return res;

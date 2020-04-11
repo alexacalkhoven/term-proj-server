@@ -8,25 +8,28 @@ import java.util.concurrent.Executors;
 
 import main.controller.Session;
 
+/**
+ * Initializes the server and waits for a connection from the client.
+ * 
+ * @author Radu Schirliu
+ */
 public class Server {
+	
+    //Class to execute the Runnable
 	private ExecutorService es;
+    //Where the server and client exchange information through
 	private ServerSocket serverSocket;
 	
 	public static void main(String[] args) {
-		System.out.println("hello alonk");
-		System.out.println("java 13 witch !!!!!!");
-		System.out.println("mais pourqoui pas :(");
-		System.out.println("");
-		
+        //Connects the server to the correct port
 		Server server = new Server(4200);
 		server.listen();
-		// listen here girly-oats
-		// smfh
 	}
 	
 	public Server(int port) {
 		try {
 			serverSocket = new ServerSocket(port);
+            //Creates new threads as needed
 			es = Executors.newCachedThreadPool();
 			System.out.println("Server started");
 		} catch (IOException e) {
@@ -35,12 +38,18 @@ public class Server {
 		}
 	}
 	
+    /**
+     * Waits for a client to start running on the socket and 
+     * will connect on a new thread when a client is detected.
+     */
 	public void listen() {
 		System.out.println("Listening for connections...");
 		
+        //Loops, waiting for clients to connect at all times
 		while (true) {
 			try {
 				Socket client = serverSocket.accept();
+                //Starts a new session on a new (or unused) thread
 				es.execute(new Session(client));
 			} catch (IOException e) {
 				System.err.println("Failed to get client connection");
