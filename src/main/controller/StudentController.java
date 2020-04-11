@@ -5,10 +5,17 @@ import main.model.StudentList;
 public class StudentController {
 	private CommunicationManager comManager;
 	private StudentList studentList;
+	private int id;
 	
 	public StudentController(CommunicationManager comManager) {
 		this.comManager = comManager;
 		this.studentList = new StudentList();
 		this.comManager.registerHandlerClass(this);
 	}
+	@HandleRequest("student.login")
+	public void studentLogin(int id) {
+		this.id = id;
+	}
+	@HandleRequest("student.addRegCourse")
+	
 }
