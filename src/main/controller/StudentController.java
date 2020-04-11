@@ -9,6 +9,9 @@ import main.model.Registration;
 import main.model.Student;
 import main.model.StudentList;
 
+/**
+ * Handles all of the network functionality related to a student
+ */
 public class StudentController {
 	private CommunicationManager comManager;
 	private StudentList studentList;
@@ -38,6 +41,7 @@ public class StudentController {
 	
 	@HandleRequest("student.regList")
 	public ArrayList<Registration> viewRegs(Object[] args){
+		if (student == null) return null;
 		return student.getRegistrationList();
 	}
 	
@@ -62,26 +66,22 @@ public class StudentController {
 	
 	@HandleRequest("student.remove")
 	public boolean removeStudent(Integer number) {
-		int initLen = studentList.getLength();
-		studentList.removeStudent(number);
-		int finalLen = studentList.getLength();
-		//returns true if successful (studentList is 1 Student shorter)
-		if(initLen - 1 == finalLen) {
-			return true;
-		}
-		return false;
+		return studentList.removeStudent(number);
 	}
 
 	@HandleRequest("student.login")
-	public void studentLogin(Integer id) {
-		this.student = studentList.getStudent(id);
+	public Student studentLogin(Integer id) {
+		student = studentList.getStudent(id);
+		return student;
 	}
 
 	//is this the drop course function?
 	@HandleRequest("student.deleteCourse")
-	public void removeCourse(Object[] args) {
+	public boolean removeCourse(Object[] args) {
+		if (student == null) return false;
+		
 		String name = (String)args[0];
 		int number = (Integer)args[1];
-		student.removeRegistration(courseCatalogue.getCourse(name, number));
+		return student.removeRegistration(courseCatalogue.getCourse(name, number));
 	}
 }

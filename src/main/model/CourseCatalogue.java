@@ -10,6 +10,9 @@ public class CourseCatalogue implements Serializable {
 	
 	private ArrayList<Course> courseList;
 
+	/**
+	 * Initialize the course catalogue, and create test courses
+	 */
 	public CourseCatalogue() {
 		courseList = new ArrayList<Course>();
 		
@@ -28,16 +31,12 @@ public class CourseCatalogue implements Serializable {
 		courseList.add(phys259);
 	}
 
-	public Course searchCourse(String courseName, int courseNum) {
-		Course course = getCourse(courseName, courseNum);
-
-		if (course == null) {
-			System.err.println("Error, course not found: " + courseName + " " + courseNum);
-		}
-
-		return course;
-	}
-
+	/**
+	 * Gets a course with specified name and number
+	 * @param courseName Course name
+	 * @param courseNum Course number
+	 * @return The course, or null if none found
+	 */
 	public Course getCourse(String courseName, int courseNum) {
 		for (Course c : courseList) {
 			if (c.getName().contentEquals(courseName) && c.getNumber() == courseNum) {
@@ -48,59 +47,82 @@ public class CourseCatalogue implements Serializable {
 		return null;
 	}
 
-	public void createCourseOffering(Course c, int secNum, int secCap) {
-		if (c == null) {
+	/**
+	 * Creates a new offering for a course
+	 * @param course The course
+	 * @param secNum The number for the section
+	 * @param secCap The capacity for the section
+	 * @return Whether the creation was successful or not
+	 */
+	public boolean createCourseOffering(Course course, int secNum, int secCap) {
+		if (course == null) {
 			System.err.println("Error, cannot create offering for null course");
-			return;
+			return false;
 		}
 
 		if (secNum <= 0) {
 			System.err.println("Error, cannot create offering with section number < 0");
-			return;
+			return false;
 		}
 
 		if (secCap < 0) {
 			System.err.println("Error, cannot create offering with section capacity < 0");
-			return;
+			return false;
 		}
 
-		if (c.getCourseOffering(secNum) != null) {
+		if (course.getCourseOffering(secNum) != null) {
 			System.err.println("Error, this section number already exists");
-			return;
+			return false;
 		}
 
 		CourseOffering offering = new CourseOffering(secNum, secCap);
-		c.addOffering(offering);
+		course.addOffering(offering);
 
-		System.out.println("Created course offering for " + c.getFullName() + ":");
+		System.out.println("Created course offering for " + course.getFullName() + ":");
 		System.out.println(offering);
+		
+		return true;
 	}
 
-	public void createCourse(String name, int num) {
+	/**
+	 * Creates a new course with given name and number
+	 * @param name Course name
+	 * @param num Course number
+	 * @return Whether the course creation was successful or not
+	 */
+	public boolean createCourse(String name, int num) {
 		Course course = getCourse(name, num);
 
 		if (course != null) {
-			System.err.println("Error, this course already exists");
-			return;
+			System.err.println("Error, this course already exists: " + name + " " + num);
+			return false;
 		}
 
 		courseList.add(new Course(name, num));
 		System.out.println("Created course: " + name + " " + num);
-	}
-
-	public void removeCourse(Course course) {
-		if (course == null)
-			return;
-
-		courseList.remove(course);
-		System.out.println("Removed course: " + course.getName() + " " + course.getNumber());
+		return true;
 	}
 	
-	public void removeCourse(String name, int num) {
-		Course c = getCourse(name, num);
-		removeCourse(c);
+	/**
+	 * Removes course with given name and number
+	 * @param name Course name
+	 * @param num Course number
+	 * @return Whether the course removal was successful or not
+	 */
+	public boolean removeCourse(String name, int num) {
+		Course course = getCourse(name, num);
+		
+		if (course == null)
+			return false;
+
+		System.out.println("Removed course: " + course.getName() + " " + course.getNumber());
+		return courseList.remove(course);
 	}
 
+	/**
+	 * Gets all courses
+	 * @return Returns list of all courses
+	 */
 	public ArrayList<Course> getCourses() {
 		return courseList;
 	}
