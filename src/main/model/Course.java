@@ -18,6 +18,10 @@ public class Course implements Serializable {
 		preReq = new ArrayList<Course>();
 		offeringList = new ArrayList<CourseOffering>();
 	}
+	
+	public int getOfferingListLength() {
+		return offeringList.size();
+	}
 
 	public void addPreReq(Course course) {
 		preReq.add(course);

@@ -75,8 +75,7 @@ public class StudentController {
 		return student;
 	}
 
-	//is this the drop course function?
-	@HandleRequest("student.deleteCourse")
+	@HandleRequest("student.dropCourse")
 	public boolean removeCourse(Object[] args) {
 		if (student == null) return false;
 		
