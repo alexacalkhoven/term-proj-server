@@ -56,8 +56,9 @@ public class StudentController {
 	}
 
 	@HandleRequest("student.login")
-	public void studentLogin(Integer id) {
-		this.student = studentList.getStudent(id);
+	public Student studentLogin(Integer id) {
+		student = studentList.getStudent(id);
+		return student;
 	}
 
 	//is this the drop course function?
