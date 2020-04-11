@@ -19,11 +19,6 @@ public class CourseOffering implements Serializable {
 		setSecCap(secCap);
 	}
 
-	// ;)))))
-	// so
-	// LONG
-	// ooeoehoeo :^)
-
 	public void addRegistration(Registration registration) {
 		registrationList.add(registration);
 		setStudentAmount(getStudentAmount() + 1);

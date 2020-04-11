@@ -13,6 +13,10 @@ public class StudentList implements Serializable {
 	public StudentList() {
 		studentList = new ArrayList<Student>();
 	}
+	
+	public int getLength() {
+		return studentList.size();
+	}
 
 	public void addStudent(String name, int id) {
 		Student student = getStudent(id);
