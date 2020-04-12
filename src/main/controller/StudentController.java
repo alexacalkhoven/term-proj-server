@@ -56,7 +56,7 @@ public class StudentController {
 	}
 	
 	@HandleRequest("student.regList")
-	public ArrayList<Registration> viewRegs(Object[] args){
+	public ArrayList<Registration> viewRegs(){
 		if (student == null) return null;
 		return student.getRegistrationList();
 	}
