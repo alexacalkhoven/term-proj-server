@@ -26,6 +26,9 @@ public class StudentController {
 		student = null;
 	}
 	
+	//TODO
+	//THIS FUNCTION IS BROKE! student.isRegistered(course) returns false
+	//when it seemingly should return true.
 	@HandleRequest("student.checkEnroll")
 	public char checkEnroll(Object[] args){
 		Course c = (Course) args[0];
