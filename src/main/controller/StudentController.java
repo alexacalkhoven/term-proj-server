@@ -26,6 +26,18 @@ public class StudentController {
 		student = null;
 	}
 	
+	@HandleRequest("student.checkEnroll")
+	public char checkEnroll(Object[] args){
+		Course c = (Course) args[0];
+		System.out.println(c.toString());
+		boolean result = student.isRegistered(c);
+		System.out.println(result);
+		if(result == true) {
+			return 'Y';
+		}
+		return 'N';
+	}
+	
 	@HandleRequest("student.create")
 	public boolean createStudent(Object[] args){
 		String name = (String)args[0];
