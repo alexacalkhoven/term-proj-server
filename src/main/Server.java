@@ -1,6 +1,7 @@
 package main;
 
 import java.io.IOException;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -21,9 +22,19 @@ public class Server {
 	private ServerSocket serverSocket;
 	
 	public static void main(String[] args) {
-        //Connects the server to the correct port
-		Server server = new Server(4200);
-		server.listen();
+		int port = 4200;
+		
+		try {
+			if (args.length == 1) {
+				port = Integer.parseInt(args[0]);
+			}
+			
+			//Connects the server to the correct port
+			Server server = new Server(port);
+			server.listen();
+		} catch (NumberFormatException e) {
+			System.err.println("If supplying arguments port, port must be a number!");
+		}
 	}
 	
 	public Server(int port) {
@@ -31,10 +42,14 @@ public class Server {
 			serverSocket = new ServerSocket(port);
             //Creates new threads as needed
 			es = Executors.newCachedThreadPool();
-			System.out.println("Server started");
+			System.out.println("Server started on port " + port);
+		} catch (BindException e) {
+			System.err.println("Failed to start server");
+			System.err.println("Port " + port + " is already in use");
+			System.exit(1);
 		} catch (IOException e) {
 			System.err.println("Failed to start server");
-			System.exit(0);
+			System.exit(1);
 			e.printStackTrace();
 		}
 	}
