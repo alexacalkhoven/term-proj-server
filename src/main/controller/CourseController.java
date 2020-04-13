@@ -6,6 +6,7 @@ import main.model.Course;
 import main.model.CourseCatalogue;
 import main.model.CourseOffering;
 
+@SuppressWarnings("unused")
 public class CourseController {
 	private CommunicationManager comManager;
 	private CourseCatalogue courseCatalogue;

@@ -13,6 +13,7 @@ import main.model.StudentList;
  * 
  * @author Radu Schirliu
  */
+@SuppressWarnings("unused")
 public class Session implements Runnable {
 	private Socket socket;
 	private ObjectInputStream socketIn;

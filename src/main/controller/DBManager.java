@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import main.model.Course;
 import main.model.CourseOffering;
 
+@SuppressWarnings("unused")
 public class DBManager {
 	private Connection connection;
 
