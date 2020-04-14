@@ -16,25 +16,39 @@ public class Course implements Serializable {
 	private int id;
 	private String name;
 	private int number;
+	private ArrayList<Course> preReq;
+	private ArrayList<CourseOffering> offeringList;
 
 	public Course(String name, int num) {
 		setName(name);
 		setNumber(num);
+
+		preReq = new ArrayList<Course>();
+		offeringList = new ArrayList<CourseOffering>();
+	}
+	
+	public int getOfferingListLength() {
+		return offeringList.size();
 	}
 
 	public void addPreReq(Course course) {
-		// TODO: make work
+		preReq.add(course);
 	}
 
 	public void addOffering(CourseOffering offering) {
 		if (offering == null)
 			return;
 
-		// TODO: alexa STOP yawning!
+		offering.setCourse(this);
+		offeringList.add(offering);
 	}
 
 	public CourseOffering getCourseOffering(int section) {
-		// TODO: make work
+		for (CourseOffering o : offeringList) {
+			if (o.getSecNum() == section)
+				return o;
+		}
+
 		return null;
 	}
 
@@ -69,15 +83,21 @@ public class Course implements Serializable {
 		return getName() + " " + getNumber();
 	}
 
+	public String toString() {
+		String s = "Course: " + getName() + " " + getNumber() + "\nAll course sections:\n";
+
+		for (CourseOffering c : offeringList) {
+			s += c + "\n";
+		}
+
+		return s;
+	}
+
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-	
-	public String toString() {
-		return "Course: " + getName() + " " + getNumber() + "\nAll course sections:\n";
 	}
 }

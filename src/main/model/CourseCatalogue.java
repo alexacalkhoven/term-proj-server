@@ -18,17 +18,32 @@ public class CourseCatalogue implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private DBManager db;
+	private ArrayList<Course> courseList;
 
 	/**
 	 * Initialize the course catalogue, and create test courses
 	 */
 	public CourseCatalogue(DBManager db) {
 		this.db = db;
+		courseList = new ArrayList<Course>();
+		
+		Course engg233 = new Course("ENGG", 233);
+		engg233.addOffering(new CourseOffering(1, 100));
+		engg233.addOffering(new CourseOffering(2, 50));
+		courseList.add(engg233);
+
+		Course ensf409 = new Course("ENSF", 409);
+		ensf409.addOffering(new CourseOffering(1, 150));
+		courseList.add(ensf409);
+
+		Course phys259 = new Course("PHYS", 259);
+		phys259.addOffering(new CourseOffering(1, 80));
+		phys259.addOffering(new CourseOffering(2, 90));
+		courseList.add(phys259);
 	}
 	
 	public int getCourseListLength() {
-		// TODO: make this do a thing!
-		return -3;
+		return courseList.size();
 	}
 
 	/**
@@ -126,8 +141,7 @@ public class CourseCatalogue implements Serializable {
 			return false;
 
 		System.out.println("Removed course: " + course.getName() + " " + course.getNumber());
-		// TODO: make the databaseo do a deleto
-		return true;
+		return courseList.remove(course);
 	}
 
 	/**
@@ -135,10 +149,18 @@ public class CourseCatalogue implements Serializable {
 	 * @return Returns list of all courses
 	 */
 	public ArrayList<Course> getCourses() {
-		return null;
+		
 	}
 
 	public String toString() {
-		return "\nAll courses in the catalogue:\n";
+		String s = "\nAll courses in the catalogue:\n";
+
+		for (Course c : courseList) {
+			s += c + "\n";
+		}
+
+		s += "----------------\n";
+
+		return s;
 	}
 }

@@ -17,22 +17,30 @@ import main.controller.DBManager;
 public class Student implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private int id;
 	private String name;
+	private int id;
+	private ArrayList<Registration> registrationList;
 
 	public Student(String name, int id) {
+		registrationList = new ArrayList<Registration>();
 		setName(name);
 		setId(id);
 	}
 
 	public boolean addRegistration(Registration registration, DBManager db) {
-		// TODO: check if reg already exists???
+		if (registrationList.contains(registration)) return false;
+		//add in registration id???
 		db.execute("INSERT INTO registrations (student_id, offering_id, grade) VALUES (?, ?, ?)", this.getId(), registration.getOffering().getSecNum(), registration.getGrade());
 		return true;
 	}
 
-	public boolean isRegistered(int courseId) {
-		// TODO: alexa (i mean jordan) fix this ur smart i believe in youu!!!!!!!
+	public boolean isRegistered(Course course) {
+		for (Registration reg : registrationList) {
+			if (reg.getOffering().getCourse().equals(course)) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 
@@ -71,7 +79,15 @@ public class Student implements Serializable {
 	}
 
 	public String toString() {
-		return "Student name: " + getName() + ", Student ID: " + getId() + "\n";
+		String s = "Student name: " + getName() + ", Student ID: " + getId() + "\n";
+
+		s += "Registered courses:\n";
+
+		for (Registration reg : registrationList) {
+			s += "\n\n" + reg;
+		}
+
+		return s;
 	}
 
 	public ArrayList<Registration> getRegistrationList(DBManager db) {
@@ -98,7 +114,7 @@ public class Student implements Serializable {
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		registrationList = regList;
 		return regList;
 
 	}
