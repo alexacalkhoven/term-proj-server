@@ -49,7 +49,7 @@ public class StudentController {
 	@HandleRequest("student.regList")
 	public ArrayList<Registration> viewRegs(){
 		if (student == null) return null;
-		return student.getRegistrationList();
+		return student.getRegistrationList(db);
 	}
 	
 	@HandleRequest("student.addRegCourse")
@@ -106,6 +106,6 @@ public class StudentController {
 			throw new InvalidRequestException("Course does not exist: " + name + " " + number);
 		}
 		
-		return student.removeRegistration(course);
+		return student.removeRegistration(course, db);
 	}
 }

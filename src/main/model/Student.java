@@ -1,7 +1,11 @@
 package main.model;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import main.controller.DBManager;
 
 /**
  * 
@@ -40,7 +44,7 @@ public class Student implements Serializable {
 		return false;
 	}
 
-	public boolean removeRegistration(Course course) {
+	public boolean removeRegistration(Course course, DBManager db) {
 		for (Registration reg : registrationList) {
 			if (reg.getOffering().getCourse().equals(course)) {
 				System.out.println("Dropped course: " + course.getFullName());
@@ -82,7 +86,31 @@ public class Student implements Serializable {
 		return s;
 	}
 
-	public ArrayList<Registration> getRegistrationList() {
+	public ArrayList<Registration> getRegistrationList(DBManager db) {
+		ArrayList<Registration> registrationList = new ArrayList<Registration>();
+		Registration registration = new Registration();
+		CourseOffering offering = null;
+		
+		ResultSet res = db.query("SELECT * FROM registrations");
+		try {
+			while(res.next()){
+				int offeringid = res.getInt(3);
+				String grade = res.getString(4);
+				
+				ResultSet res2 = db.query("SELECT * FROM offerings WHERE course_number = ?", offeringid);
+				int secCap = res2.getInt(2);
+				int secNum = res2.getInt(1);
+				offering = new CourseOffering(secCap, secNum);
+				char[] a = grade.toCharArray();
+				registration.setStudent(this);
+				registration.setOffering(offering);
+				registration.setGrade(a[0]);
+				registrationList.add(registration);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return registrationList;
+
 	}
 }

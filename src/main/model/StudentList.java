@@ -1,6 +1,8 @@
 package main.model;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import main.controller.DBManager;
@@ -53,8 +55,7 @@ public class StudentList implements Serializable {
 			return false;
 		}
 
-		student = new Student(name, id);
-		studentList.add(student);
+		db.execute("INSERT INTO students (name, id) VALUES (?, ?)", name, id);
 		System.out.println("Created new student:\n" + student);
 		return true;
 	}
@@ -66,12 +67,13 @@ public class StudentList implements Serializable {
 	 */
 	public boolean removeStudent(int id) {
 		Student student = getStudent(id);
-
-		if (student == null)
+		if(student == null) {
+			System.err.println("Student with ID: " + id + " does not exist.");
 			return false;
-
-		System.out.println("Removed student:\n" + student);
-		return studentList.remove(student);
+		}
+		db.execute("DELETE FROM students WHERE id =?", id);
+		System.out.println("Deleted Student: " + id);
+		return true;
 	}
 
 	/**
@@ -80,11 +82,20 @@ public class StudentList implements Serializable {
 	 * @return Student with given ID, or null if none found
 	 */
 	public Student getStudent(int id) {
-		for (Student s : studentList) {
-			if (s.getId() == id)
-				return s;
+	Student student = null;
+	ResultSet res = db.query("SELECT * FROM students WHERE id = ?", id);
+	try {
+		if(res.next()) {
+			int number = res.getInt(1);
+			String name = res.getString(2);
+			
+			student = new Student(name, number);
+			
+			
 		}
-
-		return null;
+	} catch(SQLException e) {
+		e.printStackTrace();
+	}
+		return student;
 	}
 }
