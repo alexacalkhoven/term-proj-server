@@ -3,6 +3,8 @@ package main.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import main.controller.DBManager;
+
 /**
  * 
  * @author Alexa Calkhoven
@@ -14,11 +16,13 @@ public class StudentList implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private ArrayList<Student> studentList;
+	private DBManager db;
 
 	/**
 	 * Initialize the student list, add test students
 	 */
-	public StudentList() {
+	public StudentList(DBManager db) {
+		this.db = db;
 		studentList = new ArrayList<Student>();
 		
 		studentList.add(new Student("Test", 1));

@@ -1,7 +1,11 @@
 package main.model;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import main.controller.DBManager;
 
 /**
  * 
@@ -13,12 +17,14 @@ import java.util.ArrayList;
 public class CourseCatalogue implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	private DBManager db;
 	private ArrayList<Course> courseList;
 
 	/**
 	 * Initialize the course catalogue, and create test courses
 	 */
-	public CourseCatalogue() {
+	public CourseCatalogue(DBManager db) {
+		this.db = db;
 		courseList = new ArrayList<Course>();
 		
 		Course engg233 = new Course("ENGG", 233);
@@ -47,17 +53,22 @@ public class CourseCatalogue implements Serializable {
 	 * @return The course, or null if none found
 	 */
 	public Course getCourse(String courseName, int courseNum) {
-		String targetName = courseName.toLowerCase();
-		
-		for (Course c : courseList) {
-			String name = c.getName().toLowerCase();
-			
-			if (name.contentEquals(targetName) && c.getNumber() == courseNum) {
-				return c;
-			}
-		}
+		Course course = null;
+		ResultSet res = db.query("SELECT * FROM courses WHERE name=? AND number=? LIMIT 1", courseName, courseNum);
 
-		return null;
+		try {
+			if (res.next()) {
+				String name = res.getString(2);
+				int number = res.getInt(3);
+				
+				course = new Course(name, number);
+				course.setId(res.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return course;
 	}
 
 	/**
@@ -111,7 +122,8 @@ public class CourseCatalogue implements Serializable {
 			return false;
 		}
 
-		courseList.add(new Course(name, num));
+//		courseList.add(new Course(name, num));
+		db.execute("INSERT INTO courses (name, number) VALUES (?, ?)", name, num);
 		System.out.println("Created course: " + name + " " + num);
 		return true;
 	}
@@ -137,7 +149,7 @@ public class CourseCatalogue implements Serializable {
 	 * @return Returns list of all courses
 	 */
 	public ArrayList<Course> getCourses() {
-		return courseList;
+		
 	}
 
 	public String toString() {

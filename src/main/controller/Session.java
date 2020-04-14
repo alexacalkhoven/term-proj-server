@@ -37,8 +37,8 @@ public class Session implements Runnable {
 		this.socket = socket;
 		this.db = db;
 		comManager = new CommunicationManager();
-		courseCatalogue = new CourseCatalogue();
-		studentList = new StudentList();
+		courseCatalogue = new CourseCatalogue(db);
+		studentList = new StudentList(db);
 		courseController = new CourseController(comManager, db, courseCatalogue);
 		studentController = new StudentController(comManager, db, studentList, courseCatalogue);
 		
