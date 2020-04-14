@@ -51,24 +51,25 @@ public class DBManager {
 				"    id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,\r\n" + 
 				"    name VARCHAR(255) NOT NULL,\r\n" + 
 				"    number INT NOT NULL\r\n" + 
-				");");
+				");\r\n" + 
+				"");
 		
 		execute("CREATE TABLE IF NOT EXISTS prerequisites (\r\n" + 
-				"    course_id INT NOT NULL,\r\n" + 
-				"    prereq_id INT NOT NULL\r\n" + 
+				"    parent_id INT NOT NULL,\r\n" + 
+				"    child_id INT NOT NULL\r\n" + 
 				");");
 		
 		execute("CREATE TABLE IF NOT EXISTS registrations (\r\n" + 
 				"    id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,\r\n" + 
 				"    student_id INT NOT NULL,\r\n" + 
-				"    offerind_id INT NOT NULL,\r\n" + 
+				"    offering_id INT NOT NULL,\r\n" + 
 				"    grade CHAR(1) NOT NULL\r\n" + 
 				");");
 		
 		execute("CREATE TABLE IF NOT EXISTS offerings (\r\n" + 
 				"    id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,\r\n" + 
 				"    course_id INT NOT NULL,\r\n" + 
-				"    number INT NOT NULL,\r\n" + 
+				"    section_number INT NOT NULL,\r\n" + 
 				"    capacity INT NOT NULL,\r\n" + 
 				"    students INT NOT NULL\r\n" + 
 				");");

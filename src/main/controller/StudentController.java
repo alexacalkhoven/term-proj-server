@@ -63,7 +63,7 @@ public class StudentController {
 		int offeringNum = (Integer)args[2];
 		Registration newReg = new Registration();
 		//link this student to the Registration
-		newReg.setStudent(student);
+//		newReg.setStudent(student);
 		
 		// Find desired course
 		Course course = courseCatalogue.getCourse(name, number);
@@ -78,7 +78,7 @@ public class StudentController {
 		}
 		
 		//if the course offering exists, link it to the Registration
-		newReg.setOffering(desiredCourseOff);
+//		newReg.setOffering(desiredCourseOff);
 		// TODO: fix this
 //		student.addRegistration(newReg);
 		return true;
