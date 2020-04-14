@@ -8,6 +8,13 @@ import java.net.Socket;
 import main.controller.Request;
 import main.controller.Response;
 
+/**
+ * 
+ * @author Alexa Calkhoven
+ * @author Radu Schirliu
+ * @author Jordan Kwan
+ *
+ */
 public class TestClient {
 	private ObjectOutputStream socketOut;
 	private Socket socket;

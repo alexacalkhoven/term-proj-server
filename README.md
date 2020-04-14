@@ -1,5 +1,6 @@
 # term-proj-server
 ENSF 409 Term Project Server
+Group: Alexa Calkhoven, Radu Schirliu, Jordan Kwan
 
 ## Building
 The project requires JUnit5 and MySQL Connector 8.0.19 in order to build.

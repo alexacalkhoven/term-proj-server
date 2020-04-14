@@ -11,7 +11,10 @@ import main.model.StudentList;
 /**
  * Manages receiving requests from the Client and sends them to the communication manager to be handled.
  * 
+ * @author Alexa Calkhoven
  * @author Radu Schirliu
+ * @author Jordan Kwan
+ *
  */
 @SuppressWarnings("unused")
 public class Session implements Runnable {

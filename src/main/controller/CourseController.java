@@ -6,6 +6,13 @@ import main.model.Course;
 import main.model.CourseCatalogue;
 import main.model.CourseOffering;
 
+/**
+ * 
+ * @author Alexa Calkhoven
+ * @author Radu Schirliu
+ * @author Jordan Kwan
+ *
+ */
 @SuppressWarnings("unused")
 public class CourseController {
 	private CommunicationManager comManager;

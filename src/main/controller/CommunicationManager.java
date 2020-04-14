@@ -19,7 +19,10 @@ import java.util.Map;
 /**
  * Stores and sets up the RequestHandlers, which can be accessed with a key (String) associated with the command.
  * 
+ * @author Alexa Calkhoven
  * @author Radu Schirliu
+ * @author Jordan Kwan
+ *
  */
 public class CommunicationManager {
 	Map<String, RequestHandler> handlers;

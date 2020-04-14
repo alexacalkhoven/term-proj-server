@@ -12,7 +12,10 @@ import main.controller.Session;
 /**
  * Initializes the server and waits for a connection from the client.
  * 
+ * @author Alexa Calkhoven
  * @author Radu Schirliu
+ * @author Jordan Kwan
+ *
  */
 public class Server {
 	

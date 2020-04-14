@@ -11,6 +11,10 @@ import main.model.StudentList;
 
 /**
  * Handles all of the network functionality related to a student
+ * @author Alexa Calkhoven
+ * @author Radu Schirliu
+ * @author Jordan Kwan
+ *
  */
 public class StudentController {
 	private CommunicationManager comManager;
@@ -24,21 +28,6 @@ public class StudentController {
 		this.courseCatalogue = courseCatalogue;
 		this.comManager.registerHandlerClass(this);
 		student = null;
-	}
-	
-	//TODO
-	//THIS FUNCTION IS BROKE! student.isRegistered(course) returns false
-	//when it seemingly should return true.
-	@HandleRequest("student.checkEnroll")
-	public char checkEnroll(Object[] args){
-		Course c = (Course) args[0];
-		System.out.println(c.toString());
-		boolean result = student.isRegistered(c);
-		System.out.println(result);
-		if(result == true) {
-			return 'Y';
-		}
-		return 'N';
 	}
 	
 	@HandleRequest("student.create")

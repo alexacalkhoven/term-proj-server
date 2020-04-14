@@ -7,6 +7,13 @@ import java.util.ArrayList;
 import main.model.Course;
 import main.model.CourseOffering;
 
+/**
+ * 
+ * @author Alexa Calkhoven
+ * @author Radu Schirliu
+ * @author Jordan Kwan
+ *
+ */
 @SuppressWarnings("unused")
 public class DBManager {
 	private Connection connection;
