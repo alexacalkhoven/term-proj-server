@@ -13,26 +13,25 @@ import java.util.ArrayList;
 public class CourseOffering implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	private int id;
 	private int secNum;
 	private int secCap;
 	private int studentAmount;
 	private Course course;
-	private ArrayList<Registration> registrationList;
 
 	public CourseOffering(int secNum, int secCap) {
-		registrationList = new ArrayList<Registration>();
 		setStudentAmount(0);
 		setSecNum(secNum);
 		setSecCap(secCap);
 	}
 
 	public void addRegistration(Registration registration) {
-		registrationList.add(registration);
+		// TODO: make it work
 		setStudentAmount(getStudentAmount() + 1);
 	}
 
 	public void removeRegistration(Registration registration) {
-		registrationList.remove(registration);
+		// TODO: make it work
 		setStudentAmount(getStudentAmount() - 1);
 	}
 

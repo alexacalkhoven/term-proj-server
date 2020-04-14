@@ -32,14 +32,14 @@ public class CourseController {
 		if (toAdd == null) {
 			return false;
 		}
-		int initLen = toAdd.getOfferingListLength();
+//		int initLen = toAdd.getOfferingListLength();
 		CourseOffering newOff = new CourseOffering((Integer) args[0], (Integer) args[1]);
 		toAdd.addOffering(newOff);
-		int finalLen = toAdd.getOfferingListLength();
-		if (initLen + 1 == finalLen) {
-			return true;
-		}
-		return false;
+//		int finalLen = toAdd.getOfferingListLength();
+//		if (initLen + 1 == finalLen) {
+//			return true;
+//		}
+		return true;
 	}
 
 	@HandleRequest("course.create")

@@ -79,7 +79,8 @@ public class StudentController {
 		
 		//if the course offering exists, link it to the Registration
 		newReg.setOffering(desiredCourseOff);
-		student.addRegistration(newReg);
+		// TODO: fix this
+//		student.addRegistration(newReg);
 		return true;
 	}
 	

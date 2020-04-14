@@ -66,11 +66,11 @@ public class DBManager {
 				");");
 		
 		execute("CREATE TABLE IF NOT EXISTS offerings (\r\n" + 
+				"    id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,\r\n" + 
+				"    course_id INT NOT NULL,\r\n" + 
 				"    number INT NOT NULL,\r\n" + 
 				"    capacity INT NOT NULL,\r\n" + 
-				"    students INT NOT NULL,\r\n" + 
-				"    course_name VARCHAR(255) NOT NULL,\r\n" + 
-				"    course_number INT NOT NULL\r\n" + 
+				"    students INT NOT NULL\r\n" + 
 				");");
 	}
 	

@@ -17,7 +17,6 @@ import main.controller.DBManager;
 public class StudentList implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private ArrayList<Student> studentList;
 	private DBManager db;
 
 	/**
@@ -25,10 +24,6 @@ public class StudentList implements Serializable {
 	 */
 	public StudentList(DBManager db) {
 		this.db = db;
-		studentList = new ArrayList<Student>();
-		
-		studentList.add(new Student("Test", 1));
-		studentList.add(new Student("Alexa", 3));
 	}
 	
 	/**
@@ -36,7 +31,8 @@ public class StudentList implements Serializable {
 	 * @return The length of the student list
 	 */
 	public int getLength() {
-		return studentList.size();
+		// TODO: fix
+		return -3;
 	}
 
 	/**

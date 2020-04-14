@@ -14,6 +14,7 @@ import main.controller.DBManager;
 public class Registration implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	private int id;
 	private Student student;
 	private CourseOffering offering;
 	private char grade;
@@ -30,10 +31,11 @@ public class Registration implements Serializable {
 			return;
 		}
 
-		if (student.isRegistered(offering.getCourse())) {
-			System.err.println("Error, student already registered for an offering in this course");
-			return;
-		}
+		// TODO: some way to check if student is registered???
+//		if (student.isRegistered(offering.getCourse())) {
+//			System.err.println("Error, student already registered for an offering in this course");
+//			return;
+//		}
 
 		student.addRegistration(this, db);
 		offering.addRegistration(this);
