@@ -27,7 +27,7 @@ public class Student implements Serializable {
 
 	public boolean addRegistration(Registration registration, DBManager db) {
 		// TODO: check if reg already exists???
-//		db.execute("INSERT INTO registrations (student_id, offering_id, grade) VALUES (?, ?, ?)", this.getId(), registration.getOffering().getSecNum(), registration.getGrade());
+		db.execute("INSERT INTO registrations (student_id, offering_id, grade) VALUES (?, ?, ?)", this.getId(), registration.getOffering().getSecNum(), registration.getGrade());
 		return true;
 	}
 
@@ -90,8 +90,8 @@ public class Student implements Serializable {
 				int secNum = res2.getInt(1);
 				offering = new CourseOffering(secCap, secNum);
 				char[] a = grade.toCharArray();
-//				registration.setStudent(this);
-//				registration.setOffering(offering);
+				registration.setStudent(this);
+				registration.setOffering(offering);
 				registration.setGrade(a[0]);
 				regList.add(registration);
 			}
@@ -100,5 +100,6 @@ public class Student implements Serializable {
 		}
 		
 		return regList;
+
 	}
 }

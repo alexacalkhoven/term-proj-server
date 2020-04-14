@@ -14,11 +14,10 @@ public class CourseOffering implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private int id;
-	private int courseId;
 	private int secNum;
 	private int secCap;
 	private int studentAmount;
-//	private Course course;
+	private Course course;
 
 	public CourseOffering(int secNum, int secCap) {
 		setStudentAmount(0);
@@ -57,12 +56,11 @@ public class CourseOffering implements Serializable {
 	}
 
 	public void setCourse(Course course) {
-//		this.course = course;
+		this.course = course;
 	}
 
 	public Course getCourse() {
-//		return this.course;
-		return null;
+		return this.course;
 	}
 
 	public String toString() {
