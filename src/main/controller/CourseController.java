@@ -16,10 +16,12 @@ import main.model.CourseOffering;
 @SuppressWarnings("unused")
 public class CourseController {
 	private CommunicationManager comManager;
+	private DBManager db;
 	private CourseCatalogue courseCatalogue;
 
-	public CourseController(CommunicationManager comManager, CourseCatalogue courseCatalogue) {
+	public CourseController(CommunicationManager comManager, DBManager db, CourseCatalogue courseCatalogue) {
 		this.comManager = comManager;
+		this.db = db;
 		this.courseCatalogue = courseCatalogue;
 		comManager.registerHandlerClass(this);
 	}

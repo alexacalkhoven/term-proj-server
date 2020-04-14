@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import main.controller.DBManager;
 import main.controller.Session;
 
 /**
@@ -23,6 +24,7 @@ public class Server {
 	private ExecutorService es;
     //Where the server and client exchange information through
 	private ServerSocket serverSocket;
+	private DBManager db;
 	
 	public static void main(String[] args) {
 		int port = 4200;
@@ -41,6 +43,8 @@ public class Server {
 	}
 	
 	public Server(int port) {
+		db = new DBManager();
+		
 		try {
 			serverSocket = new ServerSocket(port);
             //Creates new threads as needed
@@ -69,7 +73,7 @@ public class Server {
 			try {
 				Socket client = serverSocket.accept();
                 //Starts a new session on a new (or unused) thread
-				es.execute(new Session(client));
+				es.execute(new Session(client, db));
 			} catch (IOException e) {
 				System.err.println("Failed to get client connection");
 				e.printStackTrace();

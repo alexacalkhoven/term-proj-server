@@ -33,14 +33,14 @@ public class Session implements Runnable {
      * Sets up the various in/out sockets for communicating with the client on this thread.
      * @param socket Socket to connect to
      */
-	public Session(Socket socket) {
+	public Session(Socket socket, DBManager db) {
 		this.socket = socket;
-		db = new DBManager();
+		this.db = db;
 		comManager = new CommunicationManager();
 		courseCatalogue = new CourseCatalogue();
 		studentList = new StudentList();
-		courseController = new CourseController(comManager, courseCatalogue);
-		studentController = new StudentController(comManager, studentList, courseCatalogue);
+		courseController = new CourseController(comManager, db, courseCatalogue);
+		studentController = new StudentController(comManager, db, studentList, courseCatalogue);
 		
 		try {
             //Sets up a socket to send serialized objects through

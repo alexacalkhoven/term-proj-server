@@ -18,12 +18,14 @@ import main.model.StudentList;
  */
 public class StudentController {
 	private CommunicationManager comManager;
+	private DBManager db;
 	private StudentList studentList;
 	private Student student;
 	private CourseCatalogue courseCatalogue;
 	
-	public StudentController(CommunicationManager comManager, StudentList studentList, CourseCatalogue courseCatalogue) {
+	public StudentController(CommunicationManager comManager, DBManager db, StudentList studentList, CourseCatalogue courseCatalogue) {
 		this.comManager = comManager;
+		this.db = db;
 		this.studentList = studentList;
 		this.courseCatalogue = courseCatalogue;
 		this.comManager.registerHandlerClass(this);

@@ -23,25 +23,53 @@ public class DBManager {
 		String user = System.getenv("ENSF_DB_USER");
 		String password = System.getenv("ENSF_DB_PASSWORD");
 		
-		// i
-		// in fact
-		// do _not_
-		
 		if (url == null || user == null || password == null) {
-			System.err.println("wtf dude!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			System.err.println("Environment variables for database not set");
 			return;
 		}
 		
 		try {
 			connection = DriverManager.getConnection(url, user, password);
+			createTables();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.exit(1);
 		}
-		
-		execute("INSERT INTO test VALUES (?)", "memes");
 	}
 	
-	public boolean execute(String query, Object ...args) {
+	public void createTables() {
+		execute("CREATE TABLE IF NOT EXISTS students (\r\n" + 
+				"    id INT NOT NULL PRIMARY KEY,\r\n" + 
+				"    name VARCHAR(255) NOT NULL\r\n" + 
+				");");
+		
+		execute("CREATE TABLE IF NOT EXISTS courses (\r\n" + 
+				"    name VARCHAR(255) NOT NULL,\r\n" + 
+				"    number INT NOT NULL\r\n" + 
+				");");
+		
+		execute("CREATE TABLE IF NOT EXISTS prerequisites (\r\n" + 
+				"    course_name VARCHAR(255) NOT NULL,\r\n" + 
+				"    course_number INT NOT NULL\r\n" + 
+				");");
+		
+		execute("CREATE TABLE IF NOT EXISTS registrations (\r\n" + 
+				"    id INT NOT NULL PRIMARY KEY,\r\n" + 
+				"    student_id INT NOT NULL,\r\n" + 
+				"    offerind_id INT NOT NULL,\r\n" + 
+				"    grade CHAR(1) NOT NULL\r\n" + 
+				");");
+		
+		execute("CREATE TABLE IF NOT EXISTS offerings (\r\n" + 
+				"    number INT NOT NULL,\r\n" + 
+				"    capacity INT NOT NULL,\r\n" + 
+				"    students INT NOT NULL,\r\n" + 
+				"    course_name VARCHAR(255) NOT NULL,\r\n" + 
+				"    course_number INT NOT NULL\r\n" + 
+				");");
+	}
+	
+	public void execute(String query, Object ...args) {
 		try {
 			PreparedStatement s = connection.prepareStatement(query);
 			
@@ -49,12 +77,10 @@ public class DBManager {
 				s.setObject(i + 1, args[i]);
 			}
 			
-			return s.execute();
+			s.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		return false;
 	}
 	
 	public ResultSet query(String query, Object ...args) {		
