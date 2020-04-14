@@ -46,15 +46,9 @@ public class Student implements Serializable {
 
 	public boolean removeRegistration(Course course, DBManager db) {
 		//Can replace with if(isRegistered(course))
-		ResultSet res = db.query("SELECT FROM registrations WHERE id = ?", course.getId());
-
-		try {
-			if(!res.next()) {
-				return false;
-			}
-
-		}catch(SQLException e) {
-			e.printStackTrace();
+		if(!isRegistered(course)) {
+			System.err.println("Not registered for this course.");
+			return false;
 		}
 		db.execute("DELETE FROM registrations WHERE id = ?", course.getId());
 		System.out.println("Deleted registration");
@@ -95,7 +89,7 @@ public class Student implements Serializable {
 		Registration registration = new Registration();
 		CourseOffering offering = null;
 		
-		ResultSet res = db.query("SELECT * FROM registrations");
+		ResultSet res = db.query("SELECT * FROM registrations WHERE student_id = ?", this.getId());
 		try {
 			while(res.next()){
 				int offeringid = res.getInt(3);
