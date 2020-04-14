@@ -27,10 +27,10 @@ public class Student implements Serializable {
 		setId(id);
 	}
 
-	public boolean addRegistration(Registration registration) {
+	public boolean addRegistration(Registration registration, DBManager db) {
 		if (registrationList.contains(registration)) return false;
-		
-		registrationList.add(registration);
+		//add in registration id???
+		db.execute("INSERT INTO registrations (student_id, offering_id, grade) VALUES (?, ?, ?)", this.getId(), registration.getOffering().getSecNum(), registration.getGrade());
 		return true;
 	}
 
@@ -45,17 +45,21 @@ public class Student implements Serializable {
 	}
 
 	public boolean removeRegistration(Course course, DBManager db) {
-		for (Registration reg : registrationList) {
-			if (reg.getOffering().getCourse().equals(course)) {
-				System.out.println("Dropped course: " + course.getFullName());
-				reg.removeRegistration();
-				registrationList.remove(reg);
-				return true;
-			}
-		}
+		//Can replace with if(isRegistered(course))
+		ResultSet res = db.query("SELECT FROM registrations WHERE id = ?", course.getId());
 
-		System.err.println("Error, student not registered for " + course.getFullName());
-		return false;
+		try {
+			if(!res.next()) {
+				return false;
+			}
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		db.execute("DELETE FROM registrations WHERE id = ?", course.getId());
+		System.out.println("Deleted registration");
+		return true;
+
 	}
 
 	public String getName() {
@@ -87,7 +91,7 @@ public class Student implements Serializable {
 	}
 
 	public ArrayList<Registration> getRegistrationList(DBManager db) {
-		ArrayList<Registration> registrationList = new ArrayList<Registration>();
+		ArrayList<Registration> regList = new ArrayList<Registration>();
 		Registration registration = new Registration();
 		CourseOffering offering = null;
 		
@@ -105,12 +109,13 @@ public class Student implements Serializable {
 				registration.setStudent(this);
 				registration.setOffering(offering);
 				registration.setGrade(a[0]);
-				registrationList.add(registration);
+				regList.add(registration);
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return registrationList;
+		registrationList = regList;
+		return regList;
 
 	}
 }

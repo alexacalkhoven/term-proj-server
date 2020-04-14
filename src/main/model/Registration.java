@@ -2,6 +2,8 @@ package main.model;
 
 import java.io.Serializable;
 
+import main.controller.DBManager;
+
 /**
  * 
  * @author Alexa Calkhoven
@@ -15,6 +17,7 @@ public class Registration implements Serializable {
 	private Student student;
 	private CourseOffering offering;
 	private char grade;
+	private DBManager db;
 
 	public void addRegistration() {
 		if (offering == null || student == null) {
@@ -32,9 +35,9 @@ public class Registration implements Serializable {
 			return;
 		}
 
-		student.addRegistration(this);
+		student.addRegistration(this, db);
 		offering.addRegistration(this);
-
+		
 		System.out.println(
 				"Registered for " + offering.getCourse().getFullName() + " in section " + offering.getSecNum());
 	}
