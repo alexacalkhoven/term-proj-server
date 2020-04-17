@@ -89,7 +89,7 @@ public class StudentController {
 	}
 
 	@HandleRequest("student.dropCourse")
-	public boolean removeCourse(Integer courseId) throws InvalidRequestException {
+	public boolean dropCourse(Integer courseId) throws InvalidRequestException {
 		if (student == null) {
 			throw new InvalidRequestException("Must be logged in");
 		}
