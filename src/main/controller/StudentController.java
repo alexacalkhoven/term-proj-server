@@ -79,11 +79,20 @@ public class StudentController {
 		if (!studentList.createRegistration(student.getId(), offeringId)) {
 			throw new InvalidRequestException("Failed to create registration");
 		}
+		
+		courseCatalogue.updateStudentCount(offeringId, 1);
 	}
 	
 	@HandleRequest("student.remove")
-	public void removeStudent(Integer id) throws InvalidRequestException {
-		if (!studentList.removeStudent(id)) {
+	public void removeStudent(Integer studentId) throws InvalidRequestException {
+		ArrayList<Registration> regs = studentList.getRegistrations(studentId);
+		
+		for (Registration reg : regs) {
+			int offeringId = reg.getOffering().getOfferingId();
+			courseCatalogue.updateStudentCount(offeringId, -1);
+		}
+		
+		if (!studentList.removeStudent(studentId)) {
 			throw new InvalidRequestException("Failed to remove student");
 		}
 	}
@@ -103,5 +112,7 @@ public class StudentController {
 		if (!studentList.removeRegistration(student.getId(), offeringId)) {
 			throw new InvalidRequestException("Failed to remove student course registration");
 		}
+		
+		courseCatalogue.updateStudentCount(offeringId, -1);
 	}
 }

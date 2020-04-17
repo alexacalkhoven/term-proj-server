@@ -130,8 +130,6 @@ public class CourseCatalogue implements Serializable {
 	 * @return Whether the course removal was successful or not
 	 */
 	public boolean removeCourse(int courseId) {
-		// TODO: unregister students???
-		
 		db.execute("DELETE FROM prerequisites WHERE parent_id=? OR child_id=?", courseId, courseId);
 		db.execute("DELETE FROM offerings WHERE course_id=?", courseId);
 		int count = db.execute("DELETE FROM courses WHERE id=?", courseId);
@@ -247,6 +245,11 @@ public class CourseCatalogue implements Serializable {
 	 */
 	public boolean removePreReq(int parentCourseId, int childCourseId) {
 		int count = db.execute("DELETE FROM prerequisites VALUES (?, ?)", parentCourseId, childCourseId);
+		return count != 0;
+	}
+	
+	public boolean updateStudentCount(int offeringId, int difference) {
+		int count = db.execute("UPDATE offerings SET students = students + ? WHERE id=?", difference, offeringId);
 		return count != 0;
 	}
 	
