@@ -137,12 +137,12 @@ public class StudentList implements Serializable {
 		ResultSet res = db.query(
 				"SELECT registrations.id, registrations.grade, students.id, students.name, offerings.*, courses.name, courses.number "
 				+ "FROM registrations "
-				+ "INNER JOIN students ON registrations.student_id=students.id "
-				+ "INNER JOIN offerings ON registrations.offering_id=offerings.id AND students.id=? "
-				+ "INNER JOIN courses ON courses.id=offerings.course_id;", studentId);
+				+ "INNER JOIN students ON registrations.student_id=students.id AND students.id=? "
+				+ "INNER JOIN offerings ON registrations.offering_id=offerings.id "
+				+ "INNER JOIN courses ON offerings.course_id=courses.id;", studentId);
 		
 		try {
-			if (res.next()) {
+			while (res.next()) {
 				int regId = res.getInt(1);
 				char grade = res.getString(2).charAt(0);
 				
