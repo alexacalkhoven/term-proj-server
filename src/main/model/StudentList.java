@@ -32,6 +32,29 @@ public class StudentList implements Serializable {
 	 * @author Jordan!!!!
 	 * @param ?? Who knows, where's the function evevn???? we shall NEVER know!!
 	 */
+	
+	/**
+	 * Gets all students
+	 * @return A list of all students
+	 */
+	public ArrayList<Student> getStudents() {
+		ArrayList<Student> students = new ArrayList<Student>();
+		ResultSet res = db.query("SELECT * FROM students");
+		
+		try {
+			while (res.next()) {
+				int number = res.getInt(1);
+				String name = res.getString(2);
+				
+				Student student = new Student(name, number);
+				students.add(student);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return students;
+	}
 
 	/**
 	 * Creates a new student with given name and id, and adds it to the list
@@ -69,8 +92,6 @@ public class StudentList implements Serializable {
 				String name = res.getString(2);
 				
 				student = new Student(name, number);
-				
-				
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();

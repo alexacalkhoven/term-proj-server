@@ -30,6 +30,11 @@ public class StudentController {
 		student = null;
 	}
 	
+	@HandleRequest("students.getAll")
+	public ArrayList<Student> getStudents() {
+		return studentList.getStudents();
+	}
+	
 	@HandleRequest("student.create")
 	public void createStudent(Object[] args) throws InvalidRequestException {
 		String name = (String)args[0];
