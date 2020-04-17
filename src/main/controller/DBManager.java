@@ -55,7 +55,7 @@ public class DBManager {
 			
 			String[] parts = content.split(";");
 			for (String s : parts) {
-				execute(s);
+				execute(s.trim());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
