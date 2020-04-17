@@ -74,7 +74,8 @@ public class StudentController {
 
 	@HandleRequest("student.login")
 	public Student studentLogin(Integer id) {
-		return studentList.getStudent(id);
+		student = studentList.getStudent(id);
+		return student;
 	}
 
 	@HandleRequest("student.dropCourse")
