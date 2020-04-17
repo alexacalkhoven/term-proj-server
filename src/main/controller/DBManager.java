@@ -1,7 +1,9 @@
 package main.controller;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -31,50 +33,33 @@ public class DBManager {
 		
 		try {
 			connection = DriverManager.getConnection(url, user, password);
-			createTables();
+			executeFile("/init.sql");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
 	}
 	
-	public void createTables() {
-		execute("CREATE TABLE IF NOT EXISTS students (\r\n" + 
-				"    id INT NOT NULL UNIQUE PRIMARY KEY,\r\n" + 
-				"    name VARCHAR(255) NOT NULL\r\n" + 
-				");");
-		
-		execute("CREATE TABLE IF NOT EXISTS courses (\r\n" + 
-				"    id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,\r\n" + 
-				"    name VARCHAR(255) NOT NULL,\r\n" + 
-				"    number INT NOT NULL\r\n" + 
-				");");
-		
-		execute("CREATE TABLE IF NOT EXISTS prerequisites (\r\n" + 
-				"    parent_id INT NOT NULL," + 
-				"    child_id INT NOT NULL," + 
-				"    UNIQUE (parent_id, child_id)" + 
-				");");
-		
-		execute("CREATE TABLE IF NOT EXISTS registrations (\r\n" + 
-				"    id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,\r\n" + 
-				"    student_id INT NOT NULL,\r\n" + 
-				"    offering_id INT NOT NULL,\r\n" + 
-				"    grade CHAR(1) NOT NULL,\r\n" + 
-				"    UNIQUE (student_id, offering_id)\r\n" +
-				");");
-		
-		execute("CREATE TABLE IF NOT EXISTS offerings (\r\n" +
-				"    id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,\r\n" + 
-				"    number INT NOT NULL,\r\n" + 
-				"    capacity INT NOT NULL,\r\n" + 
-				"    students INT NOT NULL,\r\n" + 
-				"    course_id INT NOT NULL\r\n" + 
-				");");
-	}
-	
 	public void executeFile(String filePath) {
-//		BufferedReader reader = new BufferedReader(new FileInputStream(getClass().getResourceAsStream("./init.sql")));
+		String content = "";
+		
+		try {
+			InputStream stream = getClass().getResourceAsStream(filePath);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+			
+			while (reader.ready()) {
+				content += reader.readLine();
+			}
+			
+			reader.close();
+			
+			String[] parts = content.split(";");
+			for (String s : parts) {
+				execute(s);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public int execute(String query, Object ...args) {
