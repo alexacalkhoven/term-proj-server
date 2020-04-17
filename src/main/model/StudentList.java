@@ -144,6 +144,8 @@ public class StudentList implements Serializable {
 				off.setCourse(course);
 				
 				Registration reg = new Registration();
+				reg.setRegistrationId(regId);
+				reg.setGrade(grade);
 				reg.setOffering(off);
 				reg.setStudent(student);
 				
