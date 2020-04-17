@@ -1,11 +1,7 @@
 package main.model;
 
 import java.io.Serializable;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-
-import main.controller.DBManager;
 
 /**
  * 
@@ -27,10 +23,10 @@ public class Student implements Serializable {
 		setId(id);
 	}
 
-	public boolean addRegistration(Registration registration, DBManager db) {
+	public boolean addRegistration(Registration registration) {
 		if (registrationList.contains(registration)) return false;
-		//add in registration id???
-		db.execute("INSERT INTO registrations (student_id, offering_id, grade) VALUES (?, ?, ?)", this.getId(), registration.getOffering().getSecNum(), registration.getGrade());
+		
+		registrationList.add(registration);
 		return true;
 	}
 
@@ -44,16 +40,18 @@ public class Student implements Serializable {
 		return false;
 	}
 
-	public boolean removeRegistration(Course course, DBManager db) {
-		//Can replace with if(isRegistered(course))
-		if(!isRegistered(course)) {
-			System.err.println("Not registered for this course.");
-			return false;
+	public boolean removeRegistration(Course course) {
+		for (Registration reg : registrationList) {
+			if (reg.getOffering().getCourse().equals(course)) {
+				System.out.println("Dropped course: " + course.getFullName());
+				reg.removeRegistration();
+				registrationList.remove(reg);
+				return true;
+			}
 		}
-		db.execute("DELETE FROM registrations WHERE id = ?", course.getId());
-		System.out.println("Deleted registration");
-		return true;
 
+		System.err.println("Error, student not registered for " + course.getFullName());
+		return false;
 	}
 
 	public String getName() {
@@ -84,32 +82,7 @@ public class Student implements Serializable {
 		return s;
 	}
 
-	public ArrayList<Registration> getRegistrationList(DBManager db) {
-		ArrayList<Registration> regList = new ArrayList<Registration>();
-		Registration registration = new Registration();
-		CourseOffering offering = null;
-		
-		ResultSet res = db.query("SELECT * FROM registrations WHERE student_id = ?", this.getId());
-		try {
-			while(res.next()){
-				int offeringid = res.getInt(3);
-				String grade = res.getString(4);
-				
-				ResultSet res2 = db.query("SELECT * FROM offerings WHERE course_number = ?", offeringid);
-				int secCap = res2.getInt(2);
-				int secNum = res2.getInt(1);
-				offering = new CourseOffering(secCap, secNum);
-				char[] a = grade.toCharArray();
-				registration.setStudent(this);
-				registration.setOffering(offering);
-				registration.setGrade(a[0]);
-				regList.add(registration);
-			}
-		}catch (SQLException e) {
-			e.printStackTrace();
-		}
-		registrationList = regList;
-		return regList;
-
+	public ArrayList<Registration> getRegistrationList() {
+		return registrationList;
 	}
 }

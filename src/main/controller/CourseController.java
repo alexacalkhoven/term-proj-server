@@ -28,17 +28,17 @@ public class CourseController {
 
 	@HandleRequest("course.addOffering")
 	public boolean createOffering(Object[] args) {
-		Course toAdd = courseCatalogue.getCourse((String) args[2], (Integer) args[3]);
-		if (toAdd == null) {
-			return false;
-		}
-		int initLen = toAdd.getOfferingListLength();
-		CourseOffering newOff = new CourseOffering((Integer) args[0], (Integer) args[1]);
-		toAdd.addOffering(newOff);
-		int finalLen = toAdd.getOfferingListLength();
-		if (initLen + 1 == finalLen) {
-			return true;
-		}
+//		Course toAdd = courseCatalogue.getCourse((String) args[2], (Integer) args[3]);
+//		if (toAdd == null) {
+//			return false;
+//		}
+//		int initLen = toAdd.getOfferingListLength();
+//		CourseOffering newOff = new CourseOffering((Integer) args[0], (Integer) args[1]);
+//		toAdd.addOffering(newOff);
+//		int finalLen = toAdd.getOfferingListLength();
+//		if (initLen + 1 == finalLen) {
+//			return true;
+//		}
 		return false;
 	}
 
@@ -66,14 +66,7 @@ public class CourseController {
 		String name = (String) args[0];
 		int number = (Integer) args[1];
 
-		int initLen = courseCatalogue.getCourseListLength();
-		courseCatalogue.removeCourse(name, number);
-		int finalLen = courseCatalogue.getCourseListLength();
-		
-		if (initLen - 1 == finalLen) {
-			return true;
-		}
-		return false;
+		return courseCatalogue.removeCourse(name, number);
 	}
 
 }

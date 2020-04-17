@@ -20,12 +20,11 @@ public class CourseOffering implements Serializable {
 	private Course course;
 	private ArrayList<Registration> registrationList;
 
-	public CourseOffering(int secNum, int secCap, int id) {
+	public CourseOffering(int secNum, int secCap) {
 		registrationList = new ArrayList<Registration>();
 		setStudentAmount(0);
 		setSecNum(secNum);
 		setSecCap(secCap);
-		offeringId = id;
 	}
 
 	public void addRegistration(Registration registration) {
@@ -44,6 +43,14 @@ public class CourseOffering implements Serializable {
 
 	public void setSecNum(int secNumber) {
 		this.secNum = secNumber;
+	}
+	
+	public int getOfferingId() {
+		return offeringId;
+	}
+
+	public void setOfferingId(int offeringId) {
+		this.offeringId = offeringId;
 	}
 
 	public int getSecCap() {

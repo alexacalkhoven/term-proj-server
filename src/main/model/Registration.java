@@ -2,8 +2,6 @@ package main.model;
 
 import java.io.Serializable;
 
-import main.controller.DBManager;
-
 /**
  * 
  * @author Alexa Calkhoven
@@ -14,11 +12,11 @@ import main.controller.DBManager;
 public class Registration implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	private int registrationId;
 	private Student student;
 	private CourseOffering offering;
 	private char grade;
-	private DBManager db;
-	
+
 	public void addRegistration() {
 		if (offering == null || student == null) {
 			System.err.println("Error, cannot register without setting student or course offering");
@@ -35,9 +33,9 @@ public class Registration implements Serializable {
 			return;
 		}
 
-		student.addRegistration(this, db);
+		student.addRegistration(this);
 		offering.addRegistration(this);
-		
+
 		System.out.println(
 				"Registered for " + offering.getCourse().getFullName() + " in section " + offering.getSecNum());
 	}
@@ -68,6 +66,14 @@ public class Registration implements Serializable {
 
 	public void setGrade(char grade) {
 		this.grade = grade;
+	}
+	
+	public int getRegistrationId() {
+		return registrationId;
+	}
+
+	public void setRegistrationId(int registrationId) {
+		this.registrationId = registrationId;
 	}
 
 	public String toString() {

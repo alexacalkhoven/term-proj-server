@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Course implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private int id;
+	private int courseId;
 	private String name;
 	private int number;
 	private ArrayList<Course> preReq;
@@ -25,6 +25,14 @@ public class Course implements Serializable {
 
 		preReq = new ArrayList<Course>();
 		offeringList = new ArrayList<CourseOffering>();
+	}
+	
+	public int getCourseId() {
+		return courseId;
+	}
+	
+	public void setCourseId(int courseId) {
+		this.courseId = courseId;
 	}
 	
 	public int getOfferingListLength() {
@@ -91,13 +99,5 @@ public class Course implements Serializable {
 		}
 
 		return s;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 }
