@@ -1,11 +1,12 @@
 package main.controller;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * 
@@ -50,15 +51,17 @@ public class DBManager {
 				");");
 		
 		execute("CREATE TABLE IF NOT EXISTS prerequisites (\r\n" + 
-				"    parent_id INT NOT NULL,\r\n" + 
-				"    child_id INT NOT NULL\r\n" + 
+				"    parent_id INT NOT NULL," + 
+				"    child_id INT NOT NULL," + 
+				"    UNIQUE (parent_id, child_id)" + 
 				");");
 		
 		execute("CREATE TABLE IF NOT EXISTS registrations (\r\n" + 
 				"    id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,\r\n" + 
 				"    student_id INT NOT NULL,\r\n" + 
 				"    offering_id INT NOT NULL,\r\n" + 
-				"    grade CHAR(1) NOT NULL\r\n" + 
+				"    grade CHAR(1) NOT NULL,\r\n" + 
+				"    UNIQUE (student_id, offering_id)\r\n" +
 				");");
 		
 		execute("CREATE TABLE IF NOT EXISTS offerings (\r\n" +
@@ -68,6 +71,10 @@ public class DBManager {
 				"    students INT NOT NULL,\r\n" + 
 				"    course_id INT NOT NULL\r\n" + 
 				");");
+	}
+	
+	public void executeFile(String filePath) {
+//		BufferedReader reader = new BufferedReader(new FileInputStream(getClass().getResourceAsStream("./init.sql")));
 	}
 	
 	public int execute(String query, Object ...args) {

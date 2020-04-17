@@ -73,6 +73,8 @@ public class StudentList implements Serializable {
 	 * @return Whether the remove was successful or not
 	 */
 	public boolean removeStudent(int id) {
+		db.execute("DELETE FROM registrations WHERE student_id=?", id);
+		
 		int count = db.execute("DELETE FROM students WHERE id=?", id);
 		return count != 0;
 	}
@@ -120,8 +122,10 @@ public class StudentList implements Serializable {
 	 * @param offeringId Offering ID to remove registration for
 	 * @return Whether the removal was successful or not
 	 */
-	public boolean removeRegistration(int studentId, int courseId) {
-		int count = db.execute("DELETE FROM registrations WHERE student_id=? AND offering_id=?", studentId, courseId);
+
+
+	public boolean removeRegistration(int studentId, int offeringId) {
+		int count = db.execute("DELETE FROM registrations WHERE student_id=? AND offering_id=?", studentId, offeringId);
 		return count != 0;
 	}
 	

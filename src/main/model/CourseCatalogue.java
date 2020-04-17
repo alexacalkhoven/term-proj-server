@@ -130,6 +130,10 @@ public class CourseCatalogue implements Serializable {
 	 * @return Whether the course removal was successful or not
 	 */
 	public boolean removeCourse(int courseId) {
+		// TODO: unregister students???
+		
+		db.execute("DELETE FROM prerequisites WHERE parent_id=? OR child_id=?", courseId, courseId);
+		db.execute("DELETE FROM offerings WHERE course_id=?", courseId);
 		int count = db.execute("DELETE FROM courses WHERE id=?", courseId);
 		return count != 0;
 	}
