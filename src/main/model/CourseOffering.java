@@ -13,17 +13,19 @@ import java.util.ArrayList;
 public class CourseOffering implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	private int offeringId;
 	private int secNum;
 	private int secCap;
 	private int studentAmount;
 	private Course course;
 	private ArrayList<Registration> registrationList;
 
-	public CourseOffering(int secNum, int secCap) {
+	public CourseOffering(int secNum, int secCap, int id) {
 		registrationList = new ArrayList<Registration>();
 		setStudentAmount(0);
 		setSecNum(secNum);
 		setSecCap(secCap);
+		offeringId = id;
 	}
 
 	public void addRegistration(Registration registration) {

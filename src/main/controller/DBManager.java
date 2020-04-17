@@ -38,10 +38,6 @@ public class DBManager {
 	}
 	
 	public void createTables() {
-		// tjhhis fuknin alexa binch
-		// y she h9 me 
-		// ahhh AAAAAHAHAHHAHHAAAAHAAAHH
-		
 		execute("CREATE TABLE IF NOT EXISTS students (\r\n" + 
 				"    id INT NOT NULL UNIQUE PRIMARY KEY,\r\n" + 
 				"    name VARCHAR(255) NOT NULL\r\n" + 
@@ -61,7 +57,7 @@ public class DBManager {
 		execute("CREATE TABLE IF NOT EXISTS registrations (\r\n" + 
 				"    id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,\r\n" + 
 				"    student_id INT NOT NULL,\r\n" + 
-				"    offerind_id INT NOT NULL,\r\n" + 
+				"    offering_id INT NOT NULL,\r\n" + 
 				"    grade CHAR(1) NOT NULL\r\n" + 
 				");");
 		
@@ -69,8 +65,8 @@ public class DBManager {
 				"    number INT NOT NULL,\r\n" + 
 				"    capacity INT NOT NULL,\r\n" + 
 				"    students INT NOT NULL,\r\n" + 
-				"    course_name VARCHAR(255) NOT NULL,\r\n" + 
-				"    course_number INT NOT NULL\r\n" + 
+				"    course_id INT NOT NULL\r\n" + 
+				"    id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,\r\n" + 
 				");");
 	}
 	

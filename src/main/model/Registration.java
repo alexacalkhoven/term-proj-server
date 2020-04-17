@@ -18,7 +18,7 @@ public class Registration implements Serializable {
 	private CourseOffering offering;
 	private char grade;
 	private DBManager db;
-
+	
 	public void addRegistration() {
 		if (offering == null || student == null) {
 			System.err.println("Error, cannot register without setting student or course offering");
