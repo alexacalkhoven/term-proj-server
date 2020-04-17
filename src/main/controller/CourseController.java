@@ -27,26 +27,31 @@ public class CourseController {
 	}
 
 	@HandleRequest("course.addOffering")
-	public boolean createOffering(Object[] args) {
+	public void createOffering(Object[] args) throws InvalidRequestException {
 		int courseId = (Integer)args[0];
 		int secNum = (Integer)args[1];
 		int secCap = (Integer)args[2];
 		
-		return courseCatalogue.createCourseOffering(courseId, secNum, secCap);
+		if (!courseCatalogue.createCourseOffering(courseId, secNum, secCap)) {
+			throw new InvalidRequestException("Failed to create course offering");
+		}
 	}
 	
 	@HandleRequest("course.removeOffering")
-	public boolean removeOffering(Integer offeringId) {
-		return courseCatalogue.removeCourseOffering(offeringId);
+	public void removeOffering(Integer offeringId) throws InvalidRequestException {
+		if (!courseCatalogue.removeCourseOffering(offeringId)) {
+			throw new InvalidRequestException("Failed to remove course offering");
+		}
 	}
 
 	@HandleRequest("course.create")
-	public boolean createCourse(Object[] args) {
+	public void createCourse(Object[] args) throws InvalidRequestException {
 		String name = (String)args[0];
 		int number = (Integer)args[1];
 		
-		// returns true if successful
-		return courseCatalogue.createCourse(name, number);
+		if (!courseCatalogue.createCourse(name, number)) {
+			throw new InvalidRequestException("Failed to create new course");
+		}
 	}
 
 	@HandleRequest("course.search")
@@ -63,8 +68,10 @@ public class CourseController {
 	}
 
 	@HandleRequest("course.remove")
-	public boolean removeCourse(Integer courseId) {
-		return courseCatalogue.removeCourse(courseId);
+	public void removeCourse(Integer courseId) throws InvalidRequestException {
+		if (!courseCatalogue.removeCourse(courseId)) {
+			throw new InvalidRequestException("Failed to remove course");
+		}
 	}
 
 	@HandleRequest("course.getPreReqs")
@@ -78,18 +85,22 @@ public class CourseController {
 	}
 	
 	@HandleRequest("course.addPreReq")
-	public void addPreReq(Object[] args) {
+	public void addPreReq(Object[] args) throws InvalidRequestException {
 		int parentCourseId = (Integer)args[0];
 		int childCourseId = (Integer)args[1];
 		
-		courseCatalogue.addPreReq(parentCourseId, childCourseId);
+		if (!courseCatalogue.addPreReq(parentCourseId, childCourseId)) {
+			throw new InvalidRequestException("Failed to add prereq");
+		}
 	}
 	
 	@HandleRequest("course.removePreReq")
-	public void removePreReq(Object[] args) {
+	public void removePreReq(Object[] args) throws InvalidRequestException {
 		int parentCourseId = (Integer)args[0];
 		int childCourseId = (Integer)args[1];
 		
-		courseCatalogue.removePreReq(parentCourseId, childCourseId);
+		if (!courseCatalogue.removePreReq(parentCourseId, childCourseId)) {
+			throw new InvalidRequestException("Failed to remove pre req");
+		}
 	}
 }

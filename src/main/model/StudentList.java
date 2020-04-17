@@ -17,7 +17,6 @@ import main.controller.DBManager;
 public class StudentList implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-
 	private DBManager db;
 
 	/**
@@ -41,18 +40,8 @@ public class StudentList implements Serializable {
 	 * @return Whether it was successful or not
 	 */
 	public boolean addStudent(String name, int id) {
-		Student student = getStudent(id);
-
-		if (student != null) {
-			System.err.println("Student with this ID already exists: ");
-			System.err.println(student);
-
-			return false;
-		}
-
-		db.execute("INSERT INTO students (name, id) VALUES (?, ?)", name, id);
-		System.out.println("Created new student:\n" + student);
-		return true;
+		int count = db.execute("INSERT INTO students (name, id) VALUES (?, ?)", name, id);
+		return count != 0;
 	}
 
 	/**
@@ -61,14 +50,8 @@ public class StudentList implements Serializable {
 	 * @return Whether the remove was successful or not
 	 */
 	public boolean removeStudent(int id) {
-		Student student = getStudent(id);
-		if(student == null) {
-			System.err.println("Student with ID: " + id + " does not exist.");
-			return false;
-		}
-		db.execute("DELETE FROM students WHERE id=?", id);
-		System.out.println("Deleted Student: " + id);
-		return true;
+		int count = db.execute("DELETE FROM students WHERE id=?", id);
+		return count != 0;
 	}
 
 	/**
@@ -96,16 +79,36 @@ public class StudentList implements Serializable {
 		return student;
 	}
 	
-	public void createRegistration(int studentId, int offeringId) {
-		db.execute(
+	/**
+	 * Creates a new registration
+	 * @param studentId Student ID to create registration for
+	 * @param offeringId Offering ID to create registration for
+	 * @return Whether the creation was successful or not
+	 */
+	public boolean createRegistration(int studentId, int offeringId) {
+		int count = db.execute(
 				"INSERT INTO registrations (student_id, offering_id, grade) VALUES (?, ?, ?)",
 				studentId, offeringId, 'A');
+		
+		return count != 0;
 	}
 	
-	public void removeRegistration(int studentId, int courseId) {
-		db.execute("DELETE FROM registrations WHERE student_id=? AND course_id=?", studentId, courseId);
+	/**
+	 * Removes registration
+	 * @param studentId Student ID to remove registration for
+	 * @param offeringId Offering ID to remove registration for
+	 * @return Whether the removal was successful or not
+	 */
+	public boolean removeRegistration(int studentId, int courseId) {
+		int count = db.execute("DELETE FROM registrations WHERE student_id=? AND course_id=?", studentId, courseId);
+		return count != 0;
 	}
 	
+	/**
+	 * Gets all registrations for student with given ID
+	 * @param studentId Student to get registrations for
+	 * @return All registrations for student
+	 */
 	public ArrayList<Registration> getRegistrations(int studentId) {
 		ArrayList<Registration> regs = new ArrayList<Registration>();
 		ResultSet res = db.query(

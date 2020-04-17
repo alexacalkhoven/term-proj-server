@@ -81,7 +81,7 @@ public class DBManager {
 			s.execute();
 			return s.getUpdateCount();
 		} catch (SQLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		
 		return 0;
@@ -98,7 +98,7 @@ public class DBManager {
 			ResultSet res = s.executeQuery();
 			return res;
 		} catch (SQLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		
 		return null;

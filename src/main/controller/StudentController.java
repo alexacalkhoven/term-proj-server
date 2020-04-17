@@ -33,11 +33,13 @@ public class StudentController {
 	}
 	
 	@HandleRequest("student.create")
-	public boolean createStudent(Object[] args){
+	public void createStudent(Object[] args) throws InvalidRequestException {
 		String name = (String)args[0];
 		int id = (Integer)args[1];
 
-		return studentList.addStudent(name, id);
+		if (!studentList.addStudent(name, id)) {
+			throw new InvalidRequestException("Failed to create student");
+		}
 	}
 	
 	@HandleRequest("student.regList")
@@ -55,33 +57,36 @@ public class StudentController {
 	}
 	
 	@HandleRequest("student.addRegCourse")
-	public boolean registerStudent(Integer offeringId) throws InvalidRequestException {
+	public void registerStudent(Integer offeringId) throws InvalidRequestException {
 		if (student == null) {
 			throw new InvalidRequestException("Must be logged in");
 		}
 		
-		studentList.createRegistration(student.getId(), offeringId);
-		return true;
+		if (!studentList.createRegistration(student.getId(), offeringId)) {
+			throw new InvalidRequestException("Failed to create registration");
+		}
 	}
 	
 	@HandleRequest("student.remove")
-	public boolean removeStudent(Integer id) {
-		return studentList.removeStudent(id);
+	public void removeStudent(Integer id) throws InvalidRequestException {
+		if (!studentList.removeStudent(id)) {
+			throw new InvalidRequestException("Failed to remove student");
+		}
 	}
 
 	@HandleRequest("student.login")
 	public Student studentLogin(Integer id) {
-		student = studentList.getStudent(id);
-		return student;
+		return studentList.getStudent(id);
 	}
 
 	@HandleRequest("student.dropCourse")
-	public boolean dropCourse(Integer courseId) throws InvalidRequestException {
+	public void dropCourse(Integer courseId) throws InvalidRequestException {
 		if (student == null) {
 			throw new InvalidRequestException("Must be logged in");
 		}
 		
-		studentList.removeRegistration(student.getId(), courseId);
-		return true;
+		if (!studentList.removeRegistration(student.getId(), courseId)) {
+			throw new InvalidRequestException("Failed to remove student course registration");
+		}
 	}
 }
