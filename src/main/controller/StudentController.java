@@ -2,9 +2,7 @@ package main.controller;
 
 import java.util.ArrayList;
 
-import main.model.Course;
 import main.model.CourseCatalogue;
-import main.model.CourseOffering;
 import main.model.Registration;
 import main.model.Student;
 import main.model.StudentList;

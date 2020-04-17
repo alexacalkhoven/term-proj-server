@@ -88,7 +88,7 @@ public class StudentList implements Serializable {
 	public boolean createRegistration(int studentId, int offeringId) {
 		int count = db.execute(
 				"INSERT INTO registrations (student_id, offering_id, grade) VALUES (?, ?, ?)",
-				studentId, offeringId, 'A');
+				studentId, offeringId, "A");
 		
 		return count != 0;
 	}
