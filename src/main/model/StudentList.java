@@ -122,6 +122,8 @@ public class StudentList implements Serializable {
 	 * @param offeringId Offering ID to remove registration for
 	 * @return Whether the removal was successful or not
 	 */
+
+
 	public boolean removeRegistration(int studentId, int offeringId) {
 		int count = db.execute("DELETE FROM registrations WHERE student_id=? AND offering_id=?", studentId, offeringId);
 		return count != 0;
