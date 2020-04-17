@@ -41,46 +41,45 @@ public class StudentController {
 	}
 	
 	@HandleRequest("student.regList")
-	public ArrayList<Registration> viewRegs(){
-		if (student == null) return null;
-//		return student.getRegistrationList(db);
-		return null;
+	public ArrayList<Registration> viewRegs() throws InvalidRequestException {
+		if (student == null) {
+			throw new InvalidRequestException("Must be logged in");
+		}
+		
+		return studentList.getRegistrations(student.getId());
 	}
 	
+	@HandleRequest("student.setGrade")
+	public void setGrade(Object[] args) {
+		// TODO: make it work
+	}
+	
+	// TODO: deal with prereqs
 	@HandleRequest("student.addRegCourse")
-	public boolean registerStudent(Object[] args) throws InvalidRequestException {
+	public boolean registerStudent(Integer offeringId) throws InvalidRequestException {
 		if (student == null) {
-			throw new InvalidRequestException("Not logged in");
+			throw new InvalidRequestException("Must be logged in");
 		}
 		
-		String name = (String)args[0];
-		int number = (Integer)args[1];
-		int offeringNum = (Integer)args[2];
-		Registration newReg = new Registration();
-		//link this student to the Registration
-		newReg.setStudent(student);
+		CourseOffering offering = courseCatalogue.getOffering(offeringId);
+		ArrayList<Registration> regs = studentList.getRegistrations(student.getId());
+		ArrayList<Course> preReqs = courseCatalogue.getPreReqs(offering.getCourse().getCourseId());
 		
-		// Find desired course
-		Course course = courseCatalogue.getCourse(name, number);
-		if (course == null) {
-			throw new InvalidRequestException("Coud not find course: " + name + " " + number);
+		for (Course preReq : preReqs) {
+			boolean hasReg = true;
+			
+			for (Registration reg : regs) {
+				
+			}
 		}
 		
-		//find desired course offering
-		CourseOffering desiredCourseOff = course.getCourseOffering(offeringNum);
-		if (desiredCourseOff == null) {
-			throw new InvalidRequestException("Coud not find offering: " + offeringNum);
-		}
-		
-		//if the course offering exists, link it to the Registration
-		newReg.setOffering(desiredCourseOff);
-//		student.addRegistration(newReg);
+		studentList.createRegistration(student.getId(), offeringId);
 		return true;
 	}
 	
 	@HandleRequest("student.remove")
-	public boolean removeStudent(Integer number) {
-		return studentList.removeStudent(number);
+	public boolean removeStudent(Integer id) {
+		return studentList.removeStudent(id);
 	}
 
 	@HandleRequest("student.login")
@@ -90,18 +89,12 @@ public class StudentController {
 	}
 
 	@HandleRequest("student.dropCourse")
-	public boolean removeCourse(Object[] args) throws InvalidRequestException {
-		if (student == null) return false;
-		
-		String name = (String)args[0];
-		int number = (Integer)args[1];
-		
-		Course course = courseCatalogue.getCourse(name, number);
-		if (course == null) {
-			throw new InvalidRequestException("Course does not exist: " + name + " " + number);
+	public boolean removeCourse(Integer courseId) throws InvalidRequestException {
+		if (student == null) {
+			throw new InvalidRequestException("Must be logged in");
 		}
 		
+		studentList.removeRegistration(student.getId(), courseId);
 		return true;
-//		return student.removeRegistration(course, db);
 	}
 }

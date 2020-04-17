@@ -213,4 +213,38 @@ public class CourseCatalogue implements Serializable {
 		
 		return preReqs;
 	}
+	
+	public void addPreReq(int parentCourseId, int childCourseId) {
+		db.execute("INSERT INTO prerequisites VALUES (?, ?)", parentCourseId, childCourseId);
+	}
+	
+	public CourseOffering getOffering(int offeringId) {
+		CourseOffering offering = null;
+		ResultSet res = db.query("SELECT * FROM offerings INNER JOIN courses ON offerings.course_id=courses.id AND offerings.id=?", offeringId);
+		
+		try {
+			if (res.next()) {
+				int secNum = res.getInt(2);
+				int secCap = res.getInt(3);
+				int studentAmount = res.getInt(4);
+
+				offering = new CourseOffering(secNum, secCap);
+				offering.setOfferingId(offeringId);
+				offering.setStudentAmount(studentAmount);
+				
+				int courseId = res.getInt(6);
+				String courseName = res.getString(7);
+				int courseNumber = res.getInt(8);
+				
+				Course course = new Course(courseName, courseNumber);
+				course.setCourseId(courseId);
+				
+				offering.setCourse(course);				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return offering;
+	}
 }

@@ -66,7 +66,7 @@ public class StudentList implements Serializable {
 			System.err.println("Student with ID: " + id + " does not exist.");
 			return false;
 		}
-		db.execute("DELETE FROM students WHERE id =?", id);
+		db.execute("DELETE FROM students WHERE id=?", id);
 		System.out.println("Deleted Student: " + id);
 		return true;
 	}
@@ -77,21 +77,80 @@ public class StudentList implements Serializable {
 	 * @return Student with given ID, or null if none found
 	 */
 	public Student getStudent(int id) {
-	Student student = null;
-	ResultSet res = db.query("SELECT * FROM students WHERE id = ?", id);
-	try {
-		if(res.next()) {
-			int number = res.getInt(1);
-			String name = res.getString(2);
-			
-			student = new Student(name, number);
-			
-			
+		Student student = null;
+		ResultSet res = db.query("SELECT * FROM students WHERE id=?", id);
+		
+		try {
+			if(res.next()) {
+				int number = res.getInt(1);
+				String name = res.getString(2);
+				
+				student = new Student(name, number);
+				
+				
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
 		}
-	} catch(SQLException e) {
-		e.printStackTrace();
-	}
+		
 		return student;
+	}
+	
+	public void createRegistration(int studentId, int offeringId) {
+		db.execute(
+				"INSERT INTO registrations (student_id, offering_id, grade) VALUES (?, ?, ?)",
+				studentId, offeringId, 'A');
+	}
+	
+	public void removeRegistration(int studentId, int courseId) {
+		db.execute("DELETE FROM registrations WHERE student_id=? AND course_id=?", studentId, courseId);
+	}
+	
+	public ArrayList<Registration> getRegistrations(int studentId) {
+		ArrayList<Registration> regs = new ArrayList<Registration>();
+		ResultSet res = db.query(
+				"SELECT registrations.id, registrations.grade, students.id, students.name, offerings.*, courses.name, courses.number "
+				+ "FROM registrations "
+				+ "INNER JOIN students ON registrations.student_id=students.id "
+				+ "INNER JOIN offerings ON registrations.offering_id=offerings.id AND students.id=? "
+				+ "INNER JOIN courses ON courses.id=offerings.course_id;", studentId);
+		
+		try {
+			if (res.next()) {
+				int regId = res.getInt(1);
+				char grade = res.getString(2).charAt(0);
+				
+				String studentName = res.getString(4);
+				Student student = new Student(studentName, studentId);
+				
+				int offeringId = res.getInt(5);
+				int secNum = res.getInt(6);
+				int secCap = res.getInt(7);
+				int studentAmount = res.getInt(8);
+				
+				int courseId = res.getInt(9);
+				String courseName = res.getString(10);
+				int courseNumber = res.getInt(11);
+				
+				Course course = new Course(courseName, courseNumber);
+				course.setCourseId(courseId);
+
+				CourseOffering off = new CourseOffering(secNum, secCap);
+				off.setOfferingId(offeringId);
+				off.setStudentAmount(studentAmount);
+				off.setCourse(course);
+				
+				Registration reg = new Registration();
+				reg.setOffering(off);
+				reg.setStudent(student);
+				
+				regs.add(reg);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return regs;
 	}
 }
 

@@ -71,4 +71,12 @@ public class CourseController {
 	public ArrayList<CourseOffering> getOfferings(Integer courseId) {
 		return courseCatalogue.getOfferings(courseId);
 	}
+	
+	@HandleRequest("course.addPreReq")
+	public void addPreReq(Object[] args) {
+		int parentCourseId = (Integer)args[0];
+		int childCourseId = (Integer)args[1];
+		
+		courseCatalogue.addPreReq(parentCourseId, childCourseId);
+	}
 }
