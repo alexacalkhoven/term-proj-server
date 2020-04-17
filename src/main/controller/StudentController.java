@@ -84,12 +84,12 @@ public class StudentController {
 	}
 
 	@HandleRequest("student.dropCourse")
-	public void dropCourse(Integer courseId) throws InvalidRequestException {
+	public void dropCourse(Integer offeringId) throws InvalidRequestException {
 		if (student == null) {
 			throw new InvalidRequestException("Must be logged in");
 		}
 		
-		if (!studentList.removeRegistration(student.getId(), courseId)) {
+		if (!studentList.removeRegistration(student.getId(), offeringId)) {
 			throw new InvalidRequestException("Failed to remove student course registration");
 		}
 	}
