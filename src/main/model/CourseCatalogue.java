@@ -61,18 +61,11 @@ public class CourseCatalogue implements Serializable {
 			System.err.println("Error, cannot create offering with section capacity < 0");
 			return false;
 		}
-
-		if (course.getCourseOffering(secNum) != null) {
-			System.err.println("Error, this section number already exists");
-			return false;
-		}
-
-		CourseOffering offering = new CourseOffering(secNum, secCap);
-		course.addOffering(offering);
+		
+		db.execute("INSERT INTO offerings (number, capacity, students, course_id) VALUES (?, ?, ?, ?, ?)",
+				secNum, secCap, 0, course.getCourseId());
 
 		System.out.println("Created course offering for " + course.getFullName() + ":");
-		System.out.println(offering);
-		
 		return true;
 	}
 
@@ -94,7 +87,8 @@ public class CourseCatalogue implements Serializable {
 	 * @return Whether the course removal was successful or not
 	 */
 	public boolean removeCourse(String name, int num) {
-		return false;
+		db.execute("DELETE FROM courses WHERE name=? AND number=?", name, num);
+		return true;
 	}
 
 	/**
