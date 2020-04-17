@@ -102,6 +102,16 @@ public class CourseCatalogue implements Serializable {
 		System.out.println("Created course offering for " + courseId);
 		return count != 0;
 	}
+	
+	/**
+	 * Removes a course offering with a given ID
+	 * @param offeringId Course offering to remove
+	 * @return If it was successful or not
+	 */
+	public boolean removeCourseOffering(int offeringId) {
+		int count = db.execute("DELETE FROM offerings WHERE id=?", offeringId);
+		return count != 0;
+	}
 
 	/**
 	 * Creates a new course with given name and number
@@ -214,11 +224,33 @@ public class CourseCatalogue implements Serializable {
 		return preReqs;
 	}
 	
+	/**
+	 * Adds a new prereq to a course
+	 * @param parentCourseId Course to add prereq to
+	 * @param childCourseId Course that is prereq to parentCourse
+	 * @return If it was successful
+	 */
 	public boolean addPreReq(int parentCourseId, int childCourseId) {
 		int count = db.execute("INSERT INTO prerequisites VALUES (?, ?)", parentCourseId, childCourseId);
 		return count != 0;
 	}
 	
+	/**
+	 * Remove prereq from a course
+	 * @param parentCourseId Course to remove prereq from
+	 * @param childCourseId Course that is prereq to parentCourse
+	 * @return If it was successful
+	 */
+	public boolean removePreReq(int parentCourseId, int childCourseId) {
+		int count = db.execute("DELETE FROM prerequisites VALUES (?, ?)", parentCourseId, childCourseId);
+		return count != 0;
+	}
+	
+	/**
+	 * Gets an offering with given ID
+	 * @param offeringId ID to search for
+	 * @return
+	 */
 	public CourseOffering getOffering(int offeringId) {
 		CourseOffering offering = null;
 		ResultSet res = db.query("SELECT * FROM offerings INNER JOIN courses ON offerings.course_id=courses.id AND offerings.id=?", offeringId);

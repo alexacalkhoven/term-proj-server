@@ -34,6 +34,11 @@ public class CourseController {
 		
 		return courseCatalogue.createCourseOffering(courseId, secNum, secCap);
 	}
+	
+	@HandleRequest("course.removeOffering")
+	public boolean removeOffering(Integer offeringId) {
+		return courseCatalogue.removeCourseOffering(offeringId);
+	}
 
 	@HandleRequest("course.create")
 	public boolean createCourse(Object[] args) {
@@ -78,5 +83,13 @@ public class CourseController {
 		int childCourseId = (Integer)args[1];
 		
 		courseCatalogue.addPreReq(parentCourseId, childCourseId);
+	}
+	
+	@HandleRequest("course.removePreReq")
+	public void removePreReq(Object[] args) {
+		int parentCourseId = (Integer)args[0];
+		int childCourseId = (Integer)args[1];
+		
+		courseCatalogue.removePreReq(parentCourseId, childCourseId);
 	}
 }
