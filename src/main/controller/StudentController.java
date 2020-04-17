@@ -36,14 +36,9 @@ public class StudentController {
 	public boolean createStudent(Object[] args){
 		String name = (String)args[0];
 		int id = (Integer)args[1];
-		int initLen = studentList.getLength();
+
 		studentList.addStudent(name, id);
-		int finalLen = studentList.getLength();
-		//returns true if successful (studentList is 1 Student longer)
-		if(initLen + 1 == finalLen) {
-			return true;
-		}
-		return false;
+		return true;
 	}
 	
 	@HandleRequest("student.regList")
