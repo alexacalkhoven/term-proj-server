@@ -36,6 +36,21 @@ public class CourseCatalogue implements Serializable {
 		String targetName = courseName.toLowerCase();
 		Course course = null;
 		
+		ResultSet res = db.query("SELECT * FROM courses WHERE name=? AND number=?", courseName, courseNum);
+		
+		try {
+			if (res.next()) {
+				int id = res.getInt(1);
+				String name = res.getString(2);
+				int number = res.getInt(3);
+				
+				course = new Course(name, number);
+				course.setCourseId(id);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return course;
 	}
 
