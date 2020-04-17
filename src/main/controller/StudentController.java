@@ -3,6 +3,7 @@ package main.controller;
 import java.util.ArrayList;
 
 import main.model.CourseCatalogue;
+import main.model.CourseOffering;
 import main.model.Registration;
 import main.model.Student;
 import main.model.StudentList;
@@ -63,6 +64,16 @@ public class StudentController {
 	public void registerStudent(Integer offeringId) throws InvalidRequestException {
 		if (student == null) {
 			throw new InvalidRequestException("Must be logged in");
+		}
+		
+		ArrayList<Registration> regs = studentList.getRegistrations(student.getId());
+		CourseOffering offering = courseCatalogue.getOffering(offeringId);
+		int courseId = offering.getCourse().getCourseId();
+		
+		for (Registration reg : regs) {
+			if (reg.getOffering().getCourse().getCourseId() == courseId) {
+				throw new InvalidRequestException("Already registered for a different offering for this course");
+			}
 		}
 		
 		if (!studentList.createRegistration(student.getId(), offeringId)) {

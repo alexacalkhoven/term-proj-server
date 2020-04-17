@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS courses (
     name VARCHAR(255) NOT NULL,
     number INT NOT NULL,
     UNIQUE (name, number)
-););
+);
 
 CREATE TABLE IF NOT EXISTS prerequisites (
     parent_id INT NOT NULL,
