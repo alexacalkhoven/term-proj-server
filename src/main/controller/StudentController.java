@@ -90,18 +90,8 @@ public class StudentController {
 	}
 
 	@HandleRequest("student.dropCourse")
-	public boolean removeCourse(Object[] args) throws InvalidRequestException {
-		if (student == null) return false;
-		
-		String name = (String)args[0];
-		int number = (Integer)args[1];
-		
-		Course course = courseCatalogue.getCourse(name, number);
-		if (course == null) {
-			throw new InvalidRequestException("Course does not exist: " + name + " " + number);
+	public boolean removeCourse(Integer courseId) throws InvalidRequestException {
+		return courseCatalogue.removeCourse(courseId);
 		}
-		
-		return true;
-//		return student.removeRegistration(course, db);
-	}
+
 }
