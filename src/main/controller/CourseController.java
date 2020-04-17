@@ -58,11 +58,8 @@ public class CourseController {
 	}
 
 	@HandleRequest("course.remove")
-	public boolean removeCourse(Object[] args) {
-		String name = (String) args[0];
-		int number = (Integer) args[1];
-
-		return courseCatalogue.removeCourse(name, number);
+	public boolean removeCourse(Integer courseId) {
+		return courseCatalogue.removeCourse(courseId);
 	}
 
 	@HandleRequest("course.getPreReqs")

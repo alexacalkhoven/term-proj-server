@@ -37,8 +37,7 @@ public class StudentController {
 		String name = (String)args[0];
 		int id = (Integer)args[1];
 
-		studentList.addStudent(name, id);
-		return true;
+		return studentList.addStudent(name, id);
 	}
 	
 	@HandleRequest("student.regList")

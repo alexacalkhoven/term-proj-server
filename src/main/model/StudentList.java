@@ -29,7 +29,9 @@ public class StudentList implements Serializable {
 	
 	/**
 	 * Gets the amount of students
-	 * @return The length of the student list
+	 * ?!?!?!?!?!??!?!?!?!?!?!?
+	 * @author Jordan!!!!
+	 * @param ?? Who knows, where's the function evevn???? we shall NEVER know!!
 	 */
 
 	/**

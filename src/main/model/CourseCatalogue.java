@@ -96,7 +96,7 @@ public class CourseCatalogue implements Serializable {
 			return false;
 		}
 		
-		db.execute("INSERT INTO offerings (number, capacity, students, course_id) VALUES (?, ?, ?, ?, ?)",
+		db.execute("INSERT INTO offerings (number, capacity, students, course_id) VALUES (?, ?, ?, ?)",
 				secNum, secCap, 0, courseId);
 
 		System.out.println("Created course offering for " + courseId);
@@ -115,13 +115,12 @@ public class CourseCatalogue implements Serializable {
 	}
 	
 	/**
-	 * Removes course with given name and number
-	 * @param name Course name
-	 * @param num Course number
+	 * Removes course with given course ID
+	 * @param courseId Course ID to remove
 	 * @return Whether the course removal was successful or not
 	 */
-	public boolean removeCourse(String name, int num) {
-		db.execute("DELETE FROM courses WHERE name=? AND number=?", name, num);
+	public boolean removeCourse(int courseId) {
+		db.execute("DELETE FROM courses WHERE id=?", courseId);
 		return true;
 	}
 
