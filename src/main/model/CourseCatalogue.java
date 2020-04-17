@@ -249,7 +249,14 @@ public class CourseCatalogue implements Serializable {
 	}
 	
 	public boolean updateStudentCount(int offeringId, int difference) {
-		int count = db.execute("UPDATE offerings SET students = students + ? WHERE id=?", difference, offeringId);
+		int count = 0;
+		
+		if (difference > 0) {
+			count = db.execute("UPDATE offerings SET students = students + ? WHERE id=?", difference, offeringId);
+		} else {
+			count = db.execute("UPDATE offerings SET students = students + ? WHERE id=? AND students > 0", difference, offeringId);
+		}
+		
 		return count != 0;
 	}
 	
