@@ -121,7 +121,7 @@ public class StudentList implements Serializable {
 	 * @return Whether the removal was successful or not
 	 */
 	public boolean removeRegistration(int studentId, int courseId) {
-		int count = db.execute("DELETE FROM registrations WHERE student_id=? AND course_id=?", studentId, courseId);
+		int count = db.execute("DELETE FROM registrations WHERE student_id=? AND offering_id=?", studentId, courseId);
 		return count != 0;
 	}
 	
