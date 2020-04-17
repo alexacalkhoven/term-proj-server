@@ -70,7 +70,7 @@ public class DBManager {
 				");");
 	}
 	
-	public void execute(String query, Object ...args) {
+	public int execute(String query, Object ...args) {
 		try {
 			PreparedStatement s = connection.prepareStatement(query);
 			
@@ -79,9 +79,12 @@ public class DBManager {
 			}
 			
 			s.execute();
+			return s.getUpdateCount();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		return 0;
 	}
 	
 	public ResultSet query(String query, Object ...args) {		

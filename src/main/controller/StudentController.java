@@ -54,23 +54,10 @@ public class StudentController {
 		// TODO: make it work
 	}
 	
-	// TODO: deal with prereqs
 	@HandleRequest("student.addRegCourse")
 	public boolean registerStudent(Integer offeringId) throws InvalidRequestException {
 		if (student == null) {
 			throw new InvalidRequestException("Must be logged in");
-		}
-		
-		CourseOffering offering = courseCatalogue.getOffering(offeringId);
-		ArrayList<Registration> regs = studentList.getRegistrations(student.getId());
-		ArrayList<Course> preReqs = courseCatalogue.getPreReqs(offering.getCourse().getCourseId());
-		
-		for (Course preReq : preReqs) {
-			boolean hasReg = true;
-			
-			for (Registration reg : regs) {
-				
-			}
 		}
 		
 		studentList.createRegistration(student.getId(), offeringId);

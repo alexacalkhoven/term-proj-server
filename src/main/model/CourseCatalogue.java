@@ -80,7 +80,7 @@ public class CourseCatalogue implements Serializable {
 
 	/**
 	 * Creates a new offering for a course
-	 * @param course The course
+	 * @param courseId The course ID
 	 * @param secNum The number for the section
 	 * @param secCap The capacity for the section
 	 * @return Whether the creation was successful or not
@@ -96,11 +96,11 @@ public class CourseCatalogue implements Serializable {
 			return false;
 		}
 		
-		db.execute("INSERT INTO offerings (number, capacity, students, course_id) VALUES (?, ?, ?, ?)",
+		int count = db.execute("INSERT INTO offerings (number, capacity, students, course_id) VALUES (?, ?, ?, ?)",
 				secNum, secCap, 0, courseId);
 
 		System.out.println("Created course offering for " + courseId);
-		return true;
+		return count != 0;
 	}
 
 	/**
@@ -110,8 +110,8 @@ public class CourseCatalogue implements Serializable {
 	 * @return Whether the course creation was successful or not
 	 */
 	public boolean createCourse(String name, int num) {
-		db.execute("INSERT INTO courses (name, number) VALUES (?, ?)", name, num);
-		return true;
+		int count = db.execute("INSERT INTO courses (name, number) VALUES (?, ?)", name, num);
+		return count != 0;
 	}
 	
 	/**
@@ -120,8 +120,8 @@ public class CourseCatalogue implements Serializable {
 	 * @return Whether the course removal was successful or not
 	 */
 	public boolean removeCourse(int courseId) {
-		db.execute("DELETE FROM courses WHERE id=?", courseId);
-		return true;
+		int count = db.execute("DELETE FROM courses WHERE id=?", courseId);
+		return count != 0;
 	}
 
 	/**
@@ -214,8 +214,9 @@ public class CourseCatalogue implements Serializable {
 		return preReqs;
 	}
 	
-	public void addPreReq(int parentCourseId, int childCourseId) {
-		db.execute("INSERT INTO prerequisites VALUES (?, ?)", parentCourseId, childCourseId);
+	public boolean addPreReq(int parentCourseId, int childCourseId) {
+		int count = db.execute("INSERT INTO prerequisites VALUES (?, ?)", parentCourseId, childCourseId);
+		return count != 0;
 	}
 	
 	public CourseOffering getOffering(int offeringId) {
