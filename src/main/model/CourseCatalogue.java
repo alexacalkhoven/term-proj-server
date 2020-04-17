@@ -36,7 +36,7 @@ public class CourseCatalogue implements Serializable {
 		String targetName = courseName.toLowerCase();
 		Course course = null;
 		
-		ResultSet res = db.query("SELECT * FROM courses WHERE name=? AND number=?", courseName, courseNum);
+		ResultSet res = db.query("SELECT * FROM courses WHERE name=? AND number=?", targetName, courseNum);
 		
 		try {
 			if (res.next()) {
@@ -53,6 +53,30 @@ public class CourseCatalogue implements Serializable {
 		
 		return course;
 	}
+	
+	/**
+	 * Gets a course with specified ID
+	 * @param courseId Course ID to search for
+	 * @return The course, or null if none found
+	 */
+	public Course getCourse(int courseId) {
+		ResultSet res = db.query("SELECT * FROM courses WHERE id=?", courseId);
+		Course course = null;
+		
+		try {
+			if (res.next()) {
+				String name = res.getString(2);
+				int number = res.getInt(3);
+				
+				course = new Course(name, number);
+				course.setCourseId(courseId);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return course;
+	}
 
 	/**
 	 * Creates a new offering for a course
@@ -61,12 +85,7 @@ public class CourseCatalogue implements Serializable {
 	 * @param secCap The capacity for the section
 	 * @return Whether the creation was successful or not
 	 */
-	public boolean createCourseOffering(Course course, int secNum, int secCap) {
-		if (course == null) {
-			System.err.println("Error, cannot create offering for null course");
-			return false;
-		}
-
+	public boolean createCourseOffering(int courseId, int secNum, int secCap) {
 		if (secNum <= 0) {
 			System.err.println("Error, cannot create offering with section number < 0");
 			return false;
@@ -78,9 +97,9 @@ public class CourseCatalogue implements Serializable {
 		}
 		
 		db.execute("INSERT INTO offerings (number, capacity, students, course_id) VALUES (?, ?, ?, ?, ?)",
-				secNum, secCap, 0, course.getCourseId());
+				secNum, secCap, 0, courseId);
 
-		System.out.println("Created course offering for " + course.getFullName() + ":");
+		System.out.println("Created course offering for " + courseId);
 		return true;
 	}
 
@@ -130,5 +149,69 @@ public class CourseCatalogue implements Serializable {
 		}
 		
 		return courses;
+	}
+	
+	/**
+	 * Gets all the offerings for a given course ID
+	 * @param courseId Course ID to search for
+	 * @return All offerings for course with given ID
+	 */
+	public ArrayList<CourseOffering> getOfferings(int courseId) {
+		ArrayList<CourseOffering> offerings = new ArrayList<CourseOffering>();
+		ResultSet res = db.query("SELECT offerings.id, offerings.number, offerings.capacity, offerings.students, courses.* FROM "
+				+ "offerings INNER JOIN courses ON offerings.course_id=courses.id AND course_id=?;", courseId);
+
+		try {
+			while (res.next()) {
+				int offeringId = res.getInt(1);
+				int secNum = res.getInt(2);
+				int secCap = res.getInt(3);
+				int studentAmount = res.getInt(4);
+
+				CourseOffering off = new CourseOffering(secNum, secCap);
+				off.setOfferingId(offeringId);
+				off.setStudentAmount(studentAmount);
+				
+				String courseName = res.getString(6);
+				int courseNumber = res.getInt(7);
+				
+				Course course = new Course(courseName, courseNumber);
+				course.setCourseId(courseId);
+				
+				off.setCourse(course);				
+				offerings.add(off);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return offerings;
+	}
+	
+	/**
+	 * Gets preqres for course with given ID
+	 * @param courseId The course ID to get prereqs for
+	 * @return Prereqs
+	 */
+	public ArrayList<Course> getPreReqs(int courseId) {
+		ArrayList<Course> preReqs = new ArrayList<Course>();
+		ResultSet res = db.query("SELECT courses.id, courses.name, courses.number FROM prerequisites "
+				+ "INNER JOIN courses ON prerequisites.child_id=courses.id AND prerequisites.parent_id=?", courseId);
+		
+		try {
+			while (res.next()) {
+				int id = res.getInt(1);
+				String name = res.getString(2);
+				int number = res.getInt(3);
+
+				Course course = new Course(name, number);
+				course.setCourseId(id);
+				preReqs.add(course);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return preReqs;
 	}
 }

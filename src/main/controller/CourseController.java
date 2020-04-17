@@ -28,24 +28,20 @@ public class CourseController {
 
 	@HandleRequest("course.addOffering")
 	public boolean createOffering(Object[] args) {
-//		Course toAdd = courseCatalogue.getCourse((String) args[2], (Integer) args[3]);
-//		if (toAdd == null) {
-//			return false;
-//		}
-//		int initLen = toAdd.getOfferingListLength();
-//		CourseOffering newOff = new CourseOffering((Integer) args[0], (Integer) args[1]);
-//		toAdd.addOffering(newOff);
-//		int finalLen = toAdd.getOfferingListLength();
-//		if (initLen + 1 == finalLen) {
-//			return true;
-//		}
-		return false;
+		int courseId = (Integer)args[0];
+		int secNum = (Integer)args[1];
+		int secCap = (Integer)args[2];
+		
+		return courseCatalogue.createCourseOffering(courseId, secNum, secCap);
 	}
 
 	@HandleRequest("course.create")
 	public boolean createCourse(Object[] args) {
+		String name = (String)args[0];
+		int number = (int)args[1];
+		
 		// returns true if successful
-		return courseCatalogue.createCourse((String) args[0], (Integer) args[1]);
+		return courseCatalogue.createCourse(name, number);
 	}
 
 	@HandleRequest("course.search")
@@ -69,4 +65,17 @@ public class CourseController {
 		return courseCatalogue.removeCourse(name, number);
 	}
 
+	@HandleRequest("course.getPreReqs")
+	public ArrayList<Course> getPrereqs(Object[] args) {
+		int courseId = (Integer)args[0];
+		
+		return courseCatalogue.getPreReqs(courseId);
+	}
+	
+	@HandleRequest("course.getOfferings")
+	public ArrayList<CourseOffering> getOfferings(Object[] args) {
+		int courseId = (Integer)args[0];
+		
+		return courseCatalogue.getOfferings(courseId);
+	}
 }
