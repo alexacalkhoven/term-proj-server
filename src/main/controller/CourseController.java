@@ -38,7 +38,7 @@ public class CourseController {
 	@HandleRequest("course.create")
 	public boolean createCourse(Object[] args) {
 		String name = (String)args[0];
-		int number = (int)args[1];
+		int number = (Integer)args[1];
 		
 		// returns true if successful
 		return courseCatalogue.createCourse(name, number);
@@ -66,16 +66,12 @@ public class CourseController {
 	}
 
 	@HandleRequest("course.getPreReqs")
-	public ArrayList<Course> getPrereqs(Object[] args) {
-		int courseId = (Integer)args[0];
-		
+	public ArrayList<Course> getPrereqs(Integer courseId) {
 		return courseCatalogue.getPreReqs(courseId);
 	}
 	
 	@HandleRequest("course.getOfferings")
-	public ArrayList<CourseOffering> getOfferings(Object[] args) {
-		int courseId = (Integer)args[0];
-		
+	public ArrayList<CourseOffering> getOfferings(Integer courseId) {
 		return courseCatalogue.getOfferings(courseId);
 	}
 }
