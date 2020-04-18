@@ -48,7 +48,7 @@ public class StudentController {
 	 */
 	@HandleRequest("student.getRegFor")
 	public ArrayList<Registration> getRegsFor(Integer studentId) {
-		return studentList.getStudent(studentId).getRegistrationList();
+		return studentList.getRegistrations(studentId);
 	}
 	
 	/**
