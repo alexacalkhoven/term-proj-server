@@ -39,7 +39,6 @@ public class CourseController {
 	
 	@HandleRequest("course.removeOffering")
 	public void removeOffering(Integer offeringId) throws InvalidRequestException {
-		// TODO: unregister students?
 		if (!courseCatalogue.removeCourseOffering(offeringId)) {
 			throw new InvalidRequestException("Failed to remove course offering");
 		}
@@ -70,7 +69,6 @@ public class CourseController {
 
 	@HandleRequest("course.remove")
 	public void removeCourse(Integer courseId) throws InvalidRequestException {
-		// TODO: unregister students???
 		if (!courseCatalogue.removeCourse(courseId)) {
 			throw new InvalidRequestException("Failed to remove course");
 		}
