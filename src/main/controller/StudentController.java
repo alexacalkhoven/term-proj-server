@@ -30,14 +30,36 @@ public class StudentController {
 		this.comManager.registerHandlerClass(this);
 		student = null;
 	}
+	
+	/**
+	 * Gets registration list for a student
+	 * 
+	 * @return an ArrayList of all the Registrations
+	 */
+	@HandleRequest("student.search")
+	public Student search(Integer studentId) {
+		return studentList.getStudent(studentId);
+	}	
+	
+	/**
+	 * Gets registration list for a student
+	 * 
+	 * @return an ArrayList of all the Registrations
+	 */
+	@HandleRequest("student.getRegFor")
+	public ArrayList<Registration> getRegsFor(Integer studentId) {
+		return studentList.getStudent(studentId).getRegistrationList();
+	}
+	
 	/**
 	 * gets all of the students
 	 * @return an ArrayList of all the students
 	 */
-	@HandleRequest("students.getAll")
+	@HandleRequest("student.getAll")
 	public ArrayList<Student> getStudents() {
 		return studentList.getStudents();
 	}
+	
 	/**
 	 * creates a student
 	 * @param args an object array holding the name and id of the student
