@@ -151,6 +151,14 @@ public class StudentController {
 		return student;
 	}
 	/**
+	 * gets the student logged in
+	 * @return the student that is logged in
+	 */
+	@HandleRequest("student.getStudent")
+	public Student getStudent() {
+		return student;
+	}
+	/**
 	 * Drops a course that a student is registered for.
 	 * @param offeringId the offering id of the course that the student wishes to drop
 	 * @throws InvalidRequestException Thrown when the function fails to drop the course for the student.
