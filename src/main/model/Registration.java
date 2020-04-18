@@ -81,8 +81,8 @@ public class Registration implements Serializable {
 	}
 
 	public String toString() {
-		String s = "Course: " + offering.getCourse().getFullName() + "\n";
-		s += "Section: " + offering.getSecNum() + "\n";
+		String s = "Course: " + offering.getCourse().getFullName() + ", ";
+		s += "Section: " + offering.getSecNum() + ", ";
 		s += "Grade: " + getGrade();
 
 		return s;
