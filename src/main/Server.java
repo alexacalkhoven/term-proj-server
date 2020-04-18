@@ -25,7 +25,7 @@ public class Server {
     //Where the server and client exchange information through
 	private ServerSocket serverSocket;
 	private DBManager db;
-	
+
 	public static void main(String[] args) {
 		int port = 4200;
 		
@@ -41,7 +41,10 @@ public class Server {
 			System.err.println("If supplying arguments port, port must be a number!");
 		}
 	}
-	
+	/**
+	 * Runs a server on the specified port.
+	 * @param port the port number.
+	 */
 	public Server(int port) {
 		db = new DBManager();
 		

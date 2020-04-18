@@ -26,12 +26,18 @@ public class CourseOffering implements Serializable {
 		setSecNum(secNum);
 		setSecCap(secCap);
 	}
-
+	/**
+	 * Adds a registration to the registration list
+	 * @param registration the registration to be added
+	 */
 	public void addRegistration(Registration registration) {
 		registrationList.add(registration);
 		setStudentAmount(getStudentAmount() + 1);
 	}
-
+	/**
+	 * Removes a registration from the registration list
+	 * @param registration the registration to be removed
+	 */
 	public void removeRegistration(Registration registration) {
 		registrationList.remove(registration);
 		setStudentAmount(getStudentAmount() - 1);

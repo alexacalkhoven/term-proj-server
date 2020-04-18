@@ -21,6 +21,9 @@ import java.sql.SQLException;
 public class DBManager {
 	private Connection connection;
 
+	/**
+	 * Constructs a DBManager.
+	 */
 	public DBManager() {
 		String url = System.getenv("ENSF_DB_URL");
 		String user = System.getenv("ENSF_DB_USER");
@@ -39,7 +42,10 @@ public class DBManager {
 			System.exit(1);
 		}
 	}
-	
+	/**
+	 * Reads from a file.
+	 * @param filePath the filepath.
+	 */
 	public void executeFile(String filePath) {
 		String content = "";
 		
@@ -61,7 +67,12 @@ public class DBManager {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * adds information to the database given a query and arguments.
+	 * @param query the command given to the database.
+	 * @param args the arguments given to the database.
+	 * @return returns 0.
+	 */
 	public int execute(String query, Object ...args) {
 		try {
 			PreparedStatement s = connection.prepareStatement(query);
@@ -78,7 +89,12 @@ public class DBManager {
 		
 		return 0;
 	}
-	
+	/**
+	 * Requests data from the database given a query and arguments.
+	 * @param query the query
+	 * @param args the object array of arguments.
+	 * @return returns a ResultSet containing the desired information, if fails, returns null.
+	 */
 	public ResultSet query(String query, Object ...args) {		
 		try {
 			PreparedStatement s = connection.prepareStatement(query);

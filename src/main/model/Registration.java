@@ -16,7 +16,9 @@ public class Registration implements Serializable {
 	private Student student;
 	private CourseOffering offering;
 	private char grade;
-
+	/**
+	 * Adds a registration for the student, and adds the registration for the offering.
+	 */
 	public void addRegistration() {
 		if (offering == null || student == null) {
 			System.err.println("Error, cannot register without setting student or course offering");
@@ -39,7 +41,9 @@ public class Registration implements Serializable {
 		System.out.println(
 				"Registered for " + offering.getCourse().getFullName() + " in section " + offering.getSecNum());
 	}
-
+	/**
+	 * Removes the registration for the offering.
+	 */
 	public void removeRegistration() {
 		offering.removeRegistration(this);
 	}

@@ -30,12 +30,19 @@ public class StudentController {
 		this.comManager.registerHandlerClass(this);
 		student = null;
 	}
-	
+	/**
+	 * gets all of the students
+	 * @return an ArrayList of all the students
+	 */
 	@HandleRequest("students.getAll")
 	public ArrayList<Student> getStudents() {
 		return studentList.getStudents();
 	}
-	
+	/**
+	 * creates a student
+	 * @param args an object array holding the name and id of the student
+	 * @throws InvalidRequestException thrown when function fails to create the student
+	 */
 	@HandleRequest("student.create")
 	public void createStudent(Object[] args) throws InvalidRequestException {
 		String name = (String)args[0];
@@ -45,7 +52,11 @@ public class StudentController {
 			throw new InvalidRequestException("Failed to create student");
 		}
 	}
-	
+	/**
+	 * gets all of the registrations for a student
+	 * @return an ArrayList of the registrations for the student
+	 * @throws InvalidRequestException Thrown when the function fails to retrieve the registrations for the student.
+	 */
 	@HandleRequest("student.regList")
 	public ArrayList<Registration> viewRegs() throws InvalidRequestException {
 		if (student == null) {
@@ -54,12 +65,19 @@ public class StudentController {
 		
 		return studentList.getRegistrations(student.getId());
 	}
-	
+	/**
+	 * Sets the grade of the student
+	 * @param args the grade of the student.
+	 */
 	@HandleRequest("student.setGrade")
 	public void setGrade(Object[] args) {
 		// TODO: make it work
 	}
-	
+	/**
+	 * Registers the student for a courseOffering.
+	 * @param offeringId The offeringId for the desired courseOffering
+	 * @throws InvalidRequestException Thrown when the student is not specified.
+	 */
 	@HandleRequest("student.addRegCourse")
 	public void registerStudent(Integer offeringId) throws InvalidRequestException {
 		if (student == null) {
@@ -80,20 +98,32 @@ public class StudentController {
 			throw new InvalidRequestException("Failed to create registration");
 		}
 	}
-	
+	/**
+	 * Removes a student from the studentList
+	 * @param id the id of the target student
+	 * @throws InvalidRequestException Thrown when function fails to remove the student.
+	 */
 	@HandleRequest("student.remove")
 	public void removeStudent(Integer id) throws InvalidRequestException {
 		if (!studentList.removeStudent(id)) {
 			throw new InvalidRequestException("Failed to remove student");
 		}
 	}
-
+	/**
+	 * Gets a student based on a student id
+	 * @param id the id of the student
+	 * @return the student with the matching id
+	 */
 	@HandleRequest("student.login")
 	public Student studentLogin(Integer id) {
 		student = studentList.getStudent(id);
 		return student;
 	}
-
+	/**
+	 * Drops a course that a student is registered for.
+	 * @param offeringId the offering id of the course that the student wishes to drop
+	 * @throws InvalidRequestException Thrown when the function fails to drop the course for the student.
+	 */
 	@HandleRequest("student.dropCourse")
 	public void dropCourse(Integer offeringId) throws InvalidRequestException {
 		if (student == null) {

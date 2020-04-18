@@ -34,15 +34,24 @@ public class Course implements Serializable {
 	public void setCourseId(int courseId) {
 		this.courseId = courseId;
 	}
-	
+	/**
+	 *
+	 * @return returns the length of the offeringList
+	 */
 	public int getOfferingListLength() {
 		return offeringList.size();
 	}
-
+	/**
+	 * Adds a prerequisite course
+	 * @param course the course to be added
+	 */
 	public void addPreReq(Course course) {
 		preReq.add(course);
 	}
-
+	/**
+	 * Adds an offering
+	 * @param offering the offering to be added
+	 */
 	public void addOffering(CourseOffering offering) {
 		if (offering == null)
 			return;
@@ -50,7 +59,11 @@ public class Course implements Serializable {
 		offering.setCourse(this);
 		offeringList.add(offering);
 	}
-
+	/**
+	 * gets a course offering from the offeringList
+	 * @param section the section number of the offering.
+	 * @return returns the target CourseOffering
+	 */
 	public CourseOffering getCourseOffering(int section) {
 		for (CourseOffering o : offeringList) {
 			if (o.getSecNum() == section)
@@ -59,7 +72,11 @@ public class Course implements Serializable {
 
 		return null;
 	}
-
+	/**
+	 * searches the offeringList for a desired CourseOffering
+	 * @param section the section number of the CourseOffering
+	 * @return returns the target CourseOffering
+	 */
 	public CourseOffering searchOffering(int section) {
 		CourseOffering offering = getCourseOffering(section);
 
