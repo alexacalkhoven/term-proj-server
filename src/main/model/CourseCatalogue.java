@@ -270,7 +270,7 @@ public class CourseCatalogue implements Serializable {
 	 * @return If it was successful
 	 */
 	public boolean removePreReq(int parentCourseId, int childCourseId) {
-		int count = db.execute("DELETE FROM prerequisites VALUES (?, ?)", parentCourseId, childCourseId);
+		int count = db.execute("DELETE FROM prerequisites WHERE parent_id=? AND child_id=?", parentCourseId, childCourseId);
 		return count != 0;
 	}
 

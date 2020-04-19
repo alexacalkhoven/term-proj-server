@@ -173,6 +173,10 @@ public class CourseController {
 	public void addPreReq(Object[] args) throws InvalidRequestException {
 		int parentCourseId = (Integer) args[0];
 		int childCourseId = (Integer) args[1];
+		
+		if (parentCourseId == childCourseId) {
+			throw new InvalidRequestException("Course cannot be prereq for itself");
+		}
 
 		if (!courseCatalogue.addPreReq(parentCourseId, childCourseId)) {
 			throw new InvalidRequestException("Failed to add prereq");
