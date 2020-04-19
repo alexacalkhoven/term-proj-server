@@ -7,7 +7,8 @@ import main.model.CourseCatalogue;
 import main.model.CourseOffering;
 
 /**
- *  The course controller that handles requests to the courseList/offeringList
+ * The course controller that handles requests to the courseList/offeringList
+ * 
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan
@@ -25,14 +26,14 @@ public class CourseController {
 		this.courseCatalogue = courseCatalogue;
 		comManager.registerHandlerClass(this);
 	}
-	
+
 	@HandleRequest("course.searchById")
 	public Course searchCourse(Integer id) {
 		return courseCatalogue.getCourse(id);
 	}
 
 	@HandleRequest("course.getOfferingId")
-	public Integer getOffering(Object[] args) throws InvalidRequestException{
+	public Integer getOffering(Object[] args) throws InvalidRequestException {
 		int courseId = (Integer) args[0];
 		int secNum = (Integer) args[1];
 		int result = courseCatalogue.getCourseOfferingId(courseId, secNum);
@@ -173,7 +174,7 @@ public class CourseController {
 	public void addPreReq(Object[] args) throws InvalidRequestException {
 		int parentCourseId = (Integer) args[0];
 		int childCourseId = (Integer) args[1];
-		
+
 		if (parentCourseId == childCourseId) {
 			throw new InvalidRequestException("Course cannot be prereq for itself");
 		}

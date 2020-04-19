@@ -9,6 +9,7 @@ import main.controller.DBManager;
 
 /**
  * A class holding functions to access the courseList
+ * 
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan
@@ -270,7 +271,8 @@ public class CourseCatalogue implements Serializable {
 	 * @return If it was successful
 	 */
 	public boolean removePreReq(int parentCourseId, int childCourseId) {
-		int count = db.execute("DELETE FROM prerequisites WHERE parent_id=? AND child_id=?", parentCourseId, childCourseId);
+		int count = db.execute("DELETE FROM prerequisites WHERE parent_id=? AND child_id=?", parentCourseId,
+				childCourseId);
 		return count != 0;
 	}
 

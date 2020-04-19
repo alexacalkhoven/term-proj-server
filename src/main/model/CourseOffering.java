@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 /**
  * A class with functions dealing with accessing the offeringList
+ * 
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  */
 public class CourseOffering implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private int offeringId;
 	private int secNum;
 	private int secCap;
@@ -26,16 +27,20 @@ public class CourseOffering implements Serializable {
 		setSecNum(secNum);
 		setSecCap(secCap);
 	}
+
 	/**
 	 * Adds a registration to the registration list
+	 * 
 	 * @param registration the registration to be added
 	 */
 	public void addRegistration(Registration registration) {
 		registrationList.add(registration);
 		setStudentAmount(getStudentAmount() + 1);
 	}
+
 	/**
 	 * Removes a registration from the registration list
+	 * 
 	 * @param registration the registration to be removed
 	 */
 	public void removeRegistration(Registration registration) {
@@ -50,7 +55,7 @@ public class CourseOffering implements Serializable {
 	public void setSecNum(int secNumber) {
 		this.secNum = secNumber;
 	}
-	
+
 	public int getOfferingId() {
 		return offeringId;
 	}
@@ -77,10 +82,6 @@ public class CourseOffering implements Serializable {
 
 	public Course getCourse() {
 		return this.course;
-	}
-
-	public String toString() {
-		return "Section: " + getSecNum() + ", Spots: " + getStudentAmount() + " / " + getSecCap();
 	}
 
 	public int getStudentAmount() {

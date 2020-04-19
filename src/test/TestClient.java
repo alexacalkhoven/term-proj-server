@@ -29,36 +29,36 @@ public class TestClient {
 			System.err.println(e.getStackTrace());
 		}
 	}
-	
+
 	public Object sendRequest(String command, Object data) {
 		Request req = new Request(command, data);
-		
+
 		try {
 			socketOut.writeObject(req);
 			socketOut.reset();
-			
-			Response res = (Response)socketIn.readObject();
-			
+
+			Response res = (Response) socketIn.readObject();
+
 			if (res.getError() == null) {
 				System.out.println("Got response: " + res.getCommand() + " " + res.getData());
 			}
-			
+
 			return res.getData();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
-	
+
 	public Object sendRequest(String command, Object... data) {
 		return sendRequest(command, data);
 	}
-	
+
 	public Object sendRequest(String command) {
-		return sendRequest(command, (Object)null);
+		return sendRequest(command, (Object) null);
 	}
-	
+
 	public void close() {
 		try {
 			socketOut.close();

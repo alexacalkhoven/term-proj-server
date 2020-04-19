@@ -17,7 +17,8 @@ import java.util.Map;
  */
 
 /**
- * Stores and sets up the RequestHandlers, which can be accessed with a key (String) associated with the command.
+ * Stores and sets up the RequestHandlers, which can be accessed with a key
+ * (String) associated with the command.
  * 
  * @author Alexa Calkhoven
  * @author Radu Schirliu
@@ -26,29 +27,30 @@ import java.util.Map;
  */
 public class CommunicationManager {
 	Map<String, RequestHandler> handlers;
-	
+
 	public CommunicationManager() {
 		handlers = new HashMap<String, RequestHandler>();
 	}
-	
+
 	/**
 	 * Creates new Map element for a new command.
 	 * 
 	 * @param command Command name.
-	 * @param handler Creates an anon class where the RequestHandler is implemented and the run
-	 * function is defined.
+	 * @param handler Creates an anon class where the RequestHandler is implemented
+	 *                and the run function is defined.
 	 */
 	public void registerHandler(String command, RequestHandler handler) {
 		if (handlers.containsKey(command)) {
 			System.err.println("Cannot register two handlers with the same name: " + command);
 			return;
 		}
-		
+
 		handlers.put(command, handler);
 	}
-	
+
 	/**
-	 * Runs the appropriate function in response to the Request and returns the Response.
+	 * Runs the appropriate function in response to the Request and returns the
+	 * Response.
 	 * 
 	 * @param req The request sent by the client.
 	 * @return Response
@@ -56,26 +58,26 @@ public class CommunicationManager {
 	public Response handleRequest(Request req) {
 		if (!handlers.containsKey(req.getCommand())) {
 			System.err.println("Invalid command: " + req.getCommand());
-			
+
 			Response res = new Response(req.getCommand());
 			res.setError("Command '" + req.getCommand() + "' does not exist");
 			return res;
 		}
-		
+
 		System.out.println("Command: " + req.getCommand());
-		
+
 		try {
-			//gets the RequestHandler in the map associated with the command and runs it
+			// gets the RequestHandler in the map associated with the command and runs it
 			return handlers.get(req.getCommand()).run(req.getData());
 		} catch (InvalidRequestException e) {
 			System.err.println("Invalid Request '" + req.getCommand() + "': " + e.getMessage());
-			
+
 			Response res = new Response(req.getCommand());
 			res.setError(e.getMessage());
 			return res;
 		}
 	}
-	
+
 	/**
 	 * Links the annotated functions of a class to an element of the map.
 	 * 
@@ -83,19 +85,21 @@ public class CommunicationManager {
 	 */
 	public void registerHandlerClass(Object obj) {
 		Class<?> cls = obj.getClass();
-		
+
 		for (Method method : cls.getMethods()) {
-			//is there an annotation of type HandleRequest on this method?
+			// is there an annotation of type HandleRequest on this method?
 			if (method.isAnnotationPresent(HandleRequest.class)) {
-				//why make a HandleRequest object equal to an annotation?
-				//HandleRequest is essentially the annotation class (therefore you can set them equal)
-				// no i uhhh... no... yeah... i .... NO... wait... NO.. let that die one sec... no
+				// why make a HandleRequest object equal to an annotation?
+				// HandleRequest is essentially the annotation class (therefore you can set them
+				// equal)
+				// no i uhhh... no... yeah... i .... NO... wait... NO.. let that die one sec...
+				// no
 				HandleRequest req = method.getAnnotation(HandleRequest.class);
-				
+
 				registerHandler(req.value(), (Object data) -> {
 					Response res = new Response(req.value());
 					res.setData(null);
-					
+
 					try {
 						if (method.getParameterCount() > 0) {
 							Class<?> param = method.getParameterTypes()[0];
@@ -106,7 +110,7 @@ public class CommunicationManager {
 					} catch (InvocationTargetException e) {
 						System.err.println("Invalid request: " + req.value());
 						Throwable targetEx = e.getTargetException();
-						
+
 						if (targetEx instanceof InvalidRequestException) {
 							res.setError("Invalid request: " + targetEx.getMessage());
 						} else if (targetEx instanceof ClassCastException) {
@@ -115,8 +119,7 @@ public class CommunicationManager {
 							res.setError("Server error: " + targetEx.getClass() + " | " + targetEx.getMessage());
 							targetEx.printStackTrace();
 						}
-						
-						
+
 					} catch (IllegalArgumentException | ClassCastException e) {
 						System.err.println("Invalid request: " + req.value());
 						res.setError("Invalid request, incorrect arguments: " + e.getMessage());
@@ -125,7 +128,7 @@ public class CommunicationManager {
 						res.setError(e.getMessage());
 						e.printStackTrace();
 					}
-					
+
 					return res;
 				});
 			}

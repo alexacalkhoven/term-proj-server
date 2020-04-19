@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * A class that simulates a registration that a student or course can have.
+ * 
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan
@@ -11,13 +12,15 @@ import java.io.Serializable;
  */
 public class Registration implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private int registrationId;
 	private Student student;
 	private CourseOffering offering;
 	private char grade;
+
 	/**
-	 * Adds a registration for the student, and adds the registration for the offering.
+	 * Adds a registration for the student, and adds the registration for the
+	 * offering.
 	 */
 	public void addRegistration() {
 		if (offering == null || student == null) {
@@ -41,6 +44,7 @@ public class Registration implements Serializable {
 		System.out.println(
 				"Registered for " + offering.getCourse().getFullName() + " in section " + offering.getSecNum());
 	}
+
 	/**
 	 * Removes the registration for the offering.
 	 */
@@ -71,20 +75,12 @@ public class Registration implements Serializable {
 	public void setGrade(char grade) {
 		this.grade = grade;
 	}
-	
+
 	public int getRegistrationId() {
 		return registrationId;
 	}
 
 	public void setRegistrationId(int registrationId) {
 		this.registrationId = registrationId;
-	}
-
-	public String toString() {
-		String s = "Course: " + offering.getCourse().getFullName() + ", ";
-		s += "Section: " + offering.getSecNum() + ", ";
-		s += "Grade: " + getGrade();
-
-		return s;
 	}
 }

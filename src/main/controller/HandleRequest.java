@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Class for handling request
+ * 
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan

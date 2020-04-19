@@ -2,6 +2,7 @@ package main.controller;
 
 /**
  * class for InvalidRequestException
+ * 
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan
@@ -9,7 +10,7 @@ package main.controller;
  */
 public class InvalidRequestException extends Exception {
 	private static final long serialVersionUID = 1L;
-	
+
 	public InvalidRequestException(String message) {
 		super(message);
 	}
