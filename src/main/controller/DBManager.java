@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * 
+ * Manages accesses to the database.
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan

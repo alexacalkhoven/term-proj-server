@@ -1,7 +1,7 @@
 package main.controller;
 
 /**
- * 
+ * class for InvalidRequestException
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * 
+ * A class that simulates a student holding an id, name and list of registrations that the student may have.
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan

@@ -7,7 +7,7 @@ import main.model.CourseCatalogue;
 import main.model.CourseOffering;
 
 /**
- * 
+ *  The course controller that handles requests to the courseList/offeringList
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan

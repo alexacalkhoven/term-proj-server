@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import main.controller.DBManager;
 
 /**
- * 
+ * A list of students
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan

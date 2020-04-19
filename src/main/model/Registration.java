@@ -3,7 +3,7 @@ package main.model;
 import java.io.Serializable;
 
 /**
- * 
+ * A class that simulates a registration that a student or course can have.
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan

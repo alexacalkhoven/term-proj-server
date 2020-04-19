@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import main.controller.DBManager;
 
 /**
- * 
+ * A class holding functions to access the courseList
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan

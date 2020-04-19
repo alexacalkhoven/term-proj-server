@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * 
+ * Class of a course holding the name, course id, course number, prerequisites and offerings.
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan

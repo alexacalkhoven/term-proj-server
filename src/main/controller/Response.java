@@ -3,7 +3,7 @@ package main.controller;
 import java.io.Serializable;
 
 /**
- * 
+ * Response of the server based on given requests
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan

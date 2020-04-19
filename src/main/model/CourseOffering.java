@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * 
+ * A class with functions dealing with accessing the offeringList
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan

@@ -3,7 +3,7 @@ package main.controller;
 import java.io.Serializable;
 
 /**
- * 
+ * Class of Request for making requests to the server
  * @author Alexa Calkhoven
  * @author Radu Schirliu
  * @author Jordan Kwan
