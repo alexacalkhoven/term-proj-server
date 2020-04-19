@@ -18,7 +18,6 @@ import java.sql.SQLException;
  * @author Jordan Kwan
  *
  */
-@SuppressWarnings("unused")
 public class DBManager {
 	private Connection connection;
 
@@ -114,7 +113,7 @@ public class DBManager {
 			ResultSet res = s.executeQuery();
 			return res;
 		} catch (SQLException e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 		}
 
 		return null;
