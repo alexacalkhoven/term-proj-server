@@ -329,12 +329,15 @@ public class CourseCatalogue implements Serializable {
 
 	public Integer getCourseOfferingId(int courseId, int secNum) {
 		ResultSet res = db.query("SELECT * FROM offerings WHERE number=? AND course_id=?", secNum, courseId);
+		
 		try {
-			res.next();
-			return res.getInt(1);
+			if (res.next()) {
+				return res.getInt(1);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return -1;
 	}
 }

@@ -19,25 +19,28 @@ import main.model.CourseCatalogue;
  *
  */
 public class TestCourseController {
-
-	private CommunicationManager com;
-	private DBManager db;
-	private CourseCatalogue courseCatalogue;
-	private CourseController courseController;
+	private static CommunicationManager com;
+	private static DBManager db;
+	private static CourseCatalogue courseCatalogue;
+	private static CourseController courseController;
 
 	@BeforeClass
-	public void init() {
+	public static void init() {
 		db = new DBManager();
 		com = new CommunicationManager();
 		courseCatalogue = new CourseCatalogue(db);
 		courseController = new CourseController(com, db, courseCatalogue);
 
 		db.execute("INSERT INTO courses VALUES (-1, 'TEST', 100)");
+		db.execute("INSERT INTO courses VALUES (-2, 'TEST', 200)");
 	}
 
 	@AfterClass
-	public void cleanup() {
+	public static void cleanup() {
 		db.execute("DELETE FROM courses WHERE id=-1");
+		db.execute("DELETE FROM courses WHERE id=-2");
+		db.execute("DELETE FROM offerings WHERE course_id=-1");
+		db.execute("DELETE FROM prerequisites WHERE parent_id=-1");
 	}
 
 	@Test
@@ -54,9 +57,49 @@ public class TestCourseController {
 	public void testCreateCourse() throws InvalidRequestException {
 		courseController.createCourse(new Object[] { "TEST", 100 });
 	}
+	
+	@Test(expected = InvalidRequestException.class)
+	public void testRemoveCourse() throws InvalidRequestException {
+		courseController.removeCourse(-100);
+	}
+	
+	@Test
+	public void testGetPreReqs() {
+		Assertions.assertNotNull(courseController.getPrereqs(-1));
+	}
+	
+	@Test(expected = InvalidRequestException.class)
+	public void testGetOffering() throws InvalidRequestException {
+		courseController.getOffering(new Object[] { -1, 100 });
+	}
+	
+	@Test
+	public void testAddPreReq() throws InvalidRequestException {
+		courseController.addPreReq(new Object[] { -1, -2 });
+	}
+	
+	@Test(expected = InvalidRequestException.class)
+	public void testRemovePreReq() throws InvalidRequestException {
+		courseController.removePreReq(new Object[] { -1, -100 });
+	}
 
 	@Test
 	public void testSearch() {
 		Assertions.assertNotNull(courseController.searchCourse(new Object[] { "TEST", 100 }));
+	}
+	
+	@Test
+	public void testGetOfferings() {
+		Assertions.assertNotNull(courseController.getOfferings(-1));
+	}
+	
+	@Test
+	public void testAddOffering() throws InvalidRequestException {
+		courseController.createOffering(new Object[] { -1, 1, 100 });
+	}
+	
+	@Test(expected = InvalidRequestException.class)
+	public void testRemoveOffering() throws InvalidRequestException {
+		courseController.removeOffering(-100);
 	}
 }
