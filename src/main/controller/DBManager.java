@@ -17,7 +17,6 @@ import java.sql.SQLException;
  * @author Jordan Kwan
  *
  */
-@SuppressWarnings("unused")
 public class DBManager {
 	private Connection connection;
 
@@ -42,6 +41,7 @@ public class DBManager {
 			System.exit(1);
 		}
 	}
+	
 	/**
 	 * Reads from a file.
 	 * @param filePath the filepath.
@@ -67,6 +67,7 @@ public class DBManager {
 			e.printStackTrace();
 		}
 	}
+	
 	/**
 	 * adds information to the database given a query and arguments.
 	 * @param query the command given to the database.
@@ -89,6 +90,7 @@ public class DBManager {
 		
 		return 0;
 	}
+	
 	/**
 	 * Requests data from the database given a query and arguments.
 	 * @param query the query
