@@ -79,6 +79,8 @@ public class TestStudentController {
 	
 	/**
 	 * Tests that the createStudent method does not let you create two students with identical IDs
+	 * 
+	 * @throws InvalidRequestException if the tested function fails
 	 */
 	@Test(expected = InvalidRequestException.class)
 	public void testCreateStudent() throws InvalidRequestException {
@@ -94,7 +96,9 @@ public class TestStudentController {
 	}
 	
 	/**
-	 * Tests that the registerStudent method does not let you register for non-existant offerings
+	 * Tests that the registerStudent method does not let you register for non-existent offerings
+	 * 
+	 * @throws InvalidRequestException if the tested function fails
 	 */
 	@Test(expected = InvalidRequestException.class)
 	public void testRegisterStudent() throws InvalidRequestException {
@@ -119,6 +123,8 @@ public class TestStudentController {
 	
 	/**
 	 * Tests that the dropCourse method does let a student drop a course they are not enrolled in
+	 * 
+	 * @throws InvalidRequestException if the tested function fails
 	 */
 	@Test(expected = InvalidRequestException.class)
 	public void testDropCourse() throws InvalidRequestException {

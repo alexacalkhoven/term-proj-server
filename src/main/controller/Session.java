@@ -35,6 +35,7 @@ public class Session implements Runnable {
 	 * thread.
 	 * 
 	 * @param socket Socket to connect to
+	 * @param db Database manager
 	 */
 	public Session(Socket socket, DBManager db) {
 		this.socket = socket;

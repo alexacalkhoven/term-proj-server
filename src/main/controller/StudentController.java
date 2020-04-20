@@ -40,6 +40,7 @@ public class StudentController {
 	/**
 	 * Gets registration list for a student
 	 * 
+	 * @param studentId Student ID to search for
 	 * @return an ArrayList of all the Registrations
 	 */
 	@HandleRequest("student.search")
@@ -50,6 +51,7 @@ public class StudentController {
 	/**
 	 * Gets registration list for a student
 	 * 
+	 * @param studentId Student ID to get regs for
 	 * @return an ArrayList of all the Registrations
 	 */
 	@HandleRequest("student.getRegFor")
@@ -153,7 +155,7 @@ public class StudentController {
 	/**
 	 * Removes a student from the studentList
 	 * 
-	 * @param id the id of the target student
+	 * @param studentId the id of the target student
 	 * @throws InvalidRequestException Thrown when function fails to remove the
 	 *                                 student.
 	 */

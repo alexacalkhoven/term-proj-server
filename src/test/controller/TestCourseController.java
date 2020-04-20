@@ -68,6 +68,8 @@ public class TestCourseController {
 
 	/**
 	 * Tests that the createCourse method does not allow you to create two identical courses
+	 * 
+	 * @throws InvalidRequestException if the tested function fails
 	 */
 	@Test(expected = InvalidRequestException.class)
 	public void testCreateCourse() throws InvalidRequestException {
@@ -75,7 +77,9 @@ public class TestCourseController {
 	}
 	
 	/**
-	 * Tests that the removeCourse method does not let you remove non-existant courses
+	 * Tests that the removeCourse method does not let you remove non-existent courses
+	 * 
+	 * @throws InvalidRequestException if the tested function fails
 	 */
 	@Test(expected = InvalidRequestException.class)
 	public void testRemoveCourse() throws InvalidRequestException {
@@ -91,7 +95,9 @@ public class TestCourseController {
 	}
 	
 	/**
-	 * Tests that the getOffering method does not let you return a non-existant offering
+	 * Tests that the getOffering method does not let you return a non-existent offering
+	 * 
+	 * @throws InvalidRequestException if the tested function fails
 	 */
 	@Test(expected = InvalidRequestException.class)
 	public void testGetOffering() throws InvalidRequestException {
@@ -107,7 +113,9 @@ public class TestCourseController {
 	}
 	
 	/**
-	 * Tests that the removePreReq method does not let you remove non-existant prereqs
+	 * Tests that the removePreReq method does not let you remove non-existent prereqs
+	 * 
+	 * @throws InvalidRequestException if the tested function fails
 	 */
 	@Test(expected = InvalidRequestException.class)
 	public void testRemovePreReq() throws InvalidRequestException {
@@ -139,7 +147,9 @@ public class TestCourseController {
 	}
 	
 	/**
-	 * Tests that the removeOffering method does not let you remove a non-existant offering
+	 * Tests that the removeOffering method does not let you remove a non-existent offering
+	 * 
+	 * @throws InvalidRequestException if the tested function fails
 	 */
 	@Test(expected = InvalidRequestException.class)
 	public void testRemoveOffering() throws InvalidRequestException {
