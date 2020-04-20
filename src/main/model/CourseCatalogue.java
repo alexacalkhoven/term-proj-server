@@ -22,6 +22,8 @@ public class CourseCatalogue implements Serializable {
 
 	/**
 	 * Initialize the course catalogue, and create test courses
+	 * 
+	 * @param db Database manager
 	 */
 	public CourseCatalogue(DBManager db) {
 		this.db = db;
@@ -293,7 +295,7 @@ public class CourseCatalogue implements Serializable {
 	 * Gets an offering with given ID
 	 * 
 	 * @param offeringId ID to search for
-	 * @return
+	 * @return The found course offering
 	 */
 	public CourseOffering getOffering(int offeringId) {
 		CourseOffering offering = null;

@@ -22,6 +22,8 @@ public class StudentList implements Serializable {
 
 	/**
 	 * Initialize the student list, add test students
+	 * 
+	 * @param db The database manager
 	 */
 	public StudentList(DBManager db) {
 		this.db = db;

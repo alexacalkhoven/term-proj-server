@@ -89,6 +89,8 @@ public class TestStudentController {
 	
 	/**
 	 * Tests that the viewRegs method does not return null
+	 * 
+	 * @throws InvalidRequestException if the tested function fails
 	 */
 	@Test
 	public void testViewRegs() throws InvalidRequestException {
@@ -107,6 +109,8 @@ public class TestStudentController {
 	
 	/**
 	 * Tests that the removeStudent method lets you remove a student
+	 * 
+	 * @throws InvalidRequestException if the tested function fails
 	 */
 	@Test
 	public void testRemoveStudent() throws InvalidRequestException {

@@ -106,6 +106,8 @@ public class TestCourseController {
 	
 	/**
 	 * Tests that the removeCourse method does not return null
+	 * 
+	 * @throws InvalidRequestException if the tested function fails
 	 */
 	@Test
 	public void testAddPreReq() throws InvalidRequestException {
@@ -140,6 +142,8 @@ public class TestCourseController {
 	
 	/**
 	 * Tests that the addOffering method can create an offering
+	 * 
+	 * @throws InvalidRequestException if the tested function fails
 	 */
 	@Test
 	public void testAddOffering() throws InvalidRequestException {
