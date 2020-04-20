@@ -21,6 +21,12 @@ public class CourseOffering implements Serializable {
 	private Course course;
 	private ArrayList<Registration> registrationList;
 
+	/**
+	 * Creates a new CourseOffering with given section number and section capacity
+	 * 
+	 * @param secNum Offering section number
+	 * @param secCap Offering student capacity
+	 */
 	public CourseOffering(int secNum, int secCap) {
 		registrationList = new ArrayList<Registration>();
 		setStudentAmount(0);

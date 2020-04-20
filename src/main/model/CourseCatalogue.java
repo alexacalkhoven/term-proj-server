@@ -327,6 +327,13 @@ public class CourseCatalogue implements Serializable {
 		return offering;
 	}
 
+	/**
+	 * Finds a course offering with given courseId and section number
+	 * 
+	 * @param courseId Course ID to look for
+	 * @param secNum Section number to look for
+	 * @return The ID of the course offering, or -1 if none found
+	 */
 	public Integer getCourseOfferingId(int courseId, int secNum) {
 		ResultSet res = db.query("SELECT * FROM offerings WHERE number=? AND course_id=?", secNum, courseId);
 		

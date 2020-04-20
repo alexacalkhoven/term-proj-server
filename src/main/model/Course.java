@@ -21,6 +21,11 @@ public class Course implements Serializable {
 	private ArrayList<Course> preReq;
 	private ArrayList<CourseOffering> offeringList;
 
+	/**
+	 * Creates a new course with given name and number
+	 * @param name Course name
+	 * @param num Course number
+	 */
 	public Course(String name, int num) {
 		setName(name);
 		setNumber(num);

@@ -22,6 +22,12 @@ public class StudentController {
 	private Student student;
 	private CourseCatalogue courseCatalogue;
 
+	/**
+	 * Initializes a student controller
+	 * @param comManager The communication manager
+	 * @param studentList The student list
+	 * @param courseCatalogue The course catalogue
+	 */
 	public StudentController(CommunicationManager comManager, StudentList studentList,
 			CourseCatalogue courseCatalogue) {
 		this.comManager = comManager;

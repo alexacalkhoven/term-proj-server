@@ -27,11 +27,22 @@ public class CourseController {
 		comManager.registerHandlerClass(this);
 	}
 
+	/**
+	 * Searches for a course by ID
+	 * @param id ID to search four
+	 * @return The course with given ID, or null if none found
+	 */
 	@HandleRequest("course.searchById")
 	public Course searchCourse(Integer id) {
 		return courseCatalogue.getCourse(id);
 	}
 
+	/**
+	 * Searches for offering with given parameters
+	 * @param args Holds the courseId and sectionNumber that the client must pass
+	 * @return The ID of the given Offering
+	 * @throws InvalidRequestException If there is no offering found
+	 */
 	@HandleRequest("course.getOfferingId")
 	public Integer getOffering(Object[] args) throws InvalidRequestException {
 		int courseId = (Integer) args[0];

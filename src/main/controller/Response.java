@@ -17,10 +17,19 @@ public class Response implements Serializable {
 	private String error;
 	private Object data;
 
+	/**
+	 * Create a new response with given command, and null data
+	 * @param command Command used to make the request
+	 */
 	public Response(String command) {
 		this(command, null);
 	}
 
+	/**
+	 * Creates a new response with given command and data
+	 * @param command Command used to make the request
+	 * @param data Data returned from the net request
+	 */
 	public Response(String command, Object data) {
 		this.command = command;
 		this.data = data;

@@ -26,6 +26,10 @@ public class Server {
 	private ServerSocket serverSocket;
 	private DBManager db;
 
+	/**
+	 * Program entrypoint
+	 * @param args Command line args
+	 */
 	public static void main(String[] args) {
 		int port = 4200;
 

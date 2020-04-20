@@ -28,6 +28,9 @@ import java.util.Map;
 public class CommunicationManager {
 	Map<String, RequestHandler> handlers;
 
+	/**
+	 * Initialize the hashmap of handlers
+	 */
 	public CommunicationManager() {
 		handlers = new HashMap<String, RequestHandler>();
 	}
