@@ -118,7 +118,17 @@ public class StudentController {
 		}
 
 		ArrayList<Registration> regs = studentList.getRegistrations(student.getId());
+		
+		if (regs == null) {
+			throw new InvalidRequestException("Student registrations does not exist");
+		}
+		
 		CourseOffering offering = courseCatalogue.getOffering(offeringId);
+		
+		if (offering == null) {
+			throw new InvalidRequestException("Offering does not exist");
+		}
+		
 		int courseId = offering.getCourse().getCourseId();
 
 		for (Registration reg : regs) {
